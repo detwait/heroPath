@@ -2,42 +2,32 @@ import { useState, useEffect  } from 'react';
 import Square from '../Square/Square';
 import Piece from '../Piece/Piece';
 import './Game.css';
+import PathFinderService from '../shared/PathFinder.service';
+import { Config } from '../Config';
+
+const pathFinderService = new PathFinderService();
 
 export default function Game() {
   let timer;
   const squares = [];
 
-  function startTravel(x, y) {
-    console.log('start ' + x + '_' + y);
+  const styles = {
+    width: `${Config.boardSideLength}px`,
+    height: `${Config.boardSideLength}px`,
+  };
+
+  for (let y = 1; y <= Config.boardSideSquaresAmount; y++) {
+    for (let x = 1; x <= Config.boardSideSquaresAmount; x++) {
+      squares.push({ id: x + '_' + y, x, y });
+    }
+  }
+
+  function startTravel({ x, y }) {
     if ((x !== piece.x || y !== piece.y) && piece.state === 'stay') {
-      let xOffset = x - piece.x > 0 ? 1 : -1;
-      let yOffset = y - piece.y > 0 ? 1 : -1;
-      let startX = piece.x;
-      let startY = piece.y;
-      let travelPath = [];
-
-      travelPath.push({ x: piece.x, y: piece.y });
-
-      if (x !== piece.x) {
-        for (let i = (startX + xOffset); i !== x; i += xOffset) {
-          travelPath.push({ x: i, y: startY });
-        }
-  
-        travelPath.push({ x, y: startY });
-      }
-
-      if (y !== piece.y) {
-        for (let j = (startY + yOffset); j !== y; j += yOffset) {
-          travelPath.push({ x, y: j });
-        }
-  
-        travelPath.push({ x, y });
-      }
-
-
-      let travelDeltaTime = travelPath.length * 50;
-      let travelStartTime = new Date().getTime();
-      let travelFinishTime = travelStartTime + travelDeltaTime;
+      const travelPath = pathFinderService.findDirectPath(piece, {x, y});
+      const travelDeltaTime = travelPath.length * Config.milisecondsForSquareSpeed;
+      const travelStartTime = new Date().getTime();
+      const travelFinishTime = travelStartTime + travelDeltaTime;
 
       setPiece({
         ...piece,
@@ -65,16 +55,15 @@ export default function Game() {
 
   function travel() {
     if (piece.state === 'travel') {
-      let currentTime = new Date().getTime();
+      const currentTime = new Date().getTime();
       if (currentTime > piece.travelFinishTime) {
         finishTravel();
       } else {
-        let currectTravelSquareIndex = Math.floor(
+        const currectTravelSquareIndex = Math.floor(
           (piece.travelPath.length - 1) * (currentTime - piece.travelStartTime) / (piece.travelFinishTime - piece.travelStartTime)
         );
 
-        let x = piece.travelPath[currectTravelSquareIndex].x;
-        let y = piece.travelPath[currectTravelSquareIndex].y;
+        const { x, y } = piece.travelPath[currectTravelSquareIndex];
 
         setPiece({
           ...piece,
@@ -82,16 +71,6 @@ export default function Game() {
           y,
         });
       }
-    }
-  }
-
-  function squareClick({ x, y }) {
-    startTravel(x, y);
-  }
-
-  for (let y = 1; y <= 32; y++) {
-    for (let x = 1; x <= 32; x++) {
-      squares.push({ id: x + '_' + y, x, y });
     }
   }
 
@@ -105,9 +84,7 @@ export default function Game() {
   });
 
   useEffect(() => {
-    timer = setInterval(() => {
-      travel()
-    }, 50);
+    timer = setInterval(() => { travel(); }, Config.appIntervalFrequencyMiliseconds);
 
     return () => {
       clearInterval(timer);
@@ -115,8 +92,8 @@ export default function Game() {
   });
 
   return (
-    <div className="Board">
-      { squares.map(square => <Square key={square.id} params={square} onClick={() => squareClick(square)} />) }
+    <div className="Board" style={styles}>
+      { squares.map(square => <Square key={square.id} params={square} onClick={() => startTravel(square)} />) }
       <Piece params={piece} />
     </div>
   );

@@ -1,9 +1,14 @@
 import './Piece.css';
+import { Config } from '../Config';
 
 export default function Piece({params}) {
+  const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
+
   const styles = {
-    top:  (params.y - 1) * 25 + 'px',
-    left: (params.x - 1) * 25 + 'px',
+    width: `${sideLength}px`,
+    height: `${sideLength}px`,
+    top:  (params.y - 1) * sideLength + 'px',
+    left: (params.x - 1) * sideLength + 'px',
   };
 
   return (
