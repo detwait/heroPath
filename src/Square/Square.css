@@ -1,0 +1,14 @@
+.Square {
+  width: 25px;
+  height: 25px;
+  position: relative;
+  float: left;
+}
+
+.SquareWhite {
+  background-color: rgb(192, 186, 186);
+}
+
+.SquareGray {
+  background-color: rgb(163, 162, 162);
+}

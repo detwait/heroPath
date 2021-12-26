@@ -1,0 +1,7 @@
+.Piece {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  background: black;
+  border-radius: 50%;
+}
