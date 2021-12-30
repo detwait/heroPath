@@ -1,6 +1,7 @@
 .Square {
   position: relative;
   float: left;
+  outline: 1px solid gray;
 }
 
 .SquareWhite {
@@ -9,4 +10,8 @@
 
 .SquareGray {
   background-color: rgb(163, 162, 162);
+}
+
+.SquareBlack {
+  background-color: black;
 }

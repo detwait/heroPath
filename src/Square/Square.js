@@ -9,7 +9,7 @@ export default function Square({params, onClick}) {
     height: `${sideLength}px`,
   };
 
-  const squareColorClassName = (params.x + params.y) % 2 === 0 ? 'SquareWhite' : 'SquareGray';
+  const squareColorClassName = params.isObstacle ? 'SquareBlack' : (params.x + params.y) % 2 === 0 ? 'SquareWhite' : 'SquareGray';
   const classNames = `Square ${squareColorClassName}`;
 
   return (
