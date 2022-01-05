@@ -1,7 +1,7 @@
-import './Piece.css';
+import './PieceView.css';
 import { Config } from '../Config';
 
-export default function Piece({params}) {
+export default function PieceView({params}: any) {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles = {
