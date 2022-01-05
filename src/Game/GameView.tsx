@@ -8,6 +8,7 @@ import { Obstacle } from './Obstacle';
 import { Square } from '../Core/Square';
 import PieceView from '../Piece/PieceView';
 import { TravelSquare } from '../Core/TravelSquare';
+import { TravelState } from './TravelState.enum';
 
 const pathFinderService = new AstarPathFinderService();
 
@@ -43,7 +44,7 @@ export default function GameView() {
   const [piece, setPiece] = useState({
     x: 2,
     y: 2,
-    state: 'stay',
+    state: TravelState.stay as TravelState,
     travelPath: [] as TravelSquare[],
     travelStartTime: 0,
     travelFinishTime: 0,
@@ -54,7 +55,7 @@ export default function GameView() {
   }
 
   function startTravel({ x, y }: Partial<Square>) {
-    if (x && y && (x !== piece.x || y !== piece.y) && piece.state === 'stay') {
+    if (x && y && (x !== piece.x || y !== piece.y) && piece.state === TravelState.stay) {
       const travelPath: TravelSquare[] = pathFinderService.findPath({ start: piece, end: { x, y }, commonGrid: squares });
       
       if (travelPath && travelPath.length > 0) {
@@ -64,7 +65,7 @@ export default function GameView() {
         setPiece({
           ...piece,
           travelPath,
-          state: 'travel',
+          state: TravelState.travel,
           travelStartTime,
           travelFinishTime,
         });
@@ -79,7 +80,7 @@ export default function GameView() {
       ...piece,
       x,
       y,
-      state: 'stay',
+      state: TravelState.stay as TravelState,
       travelPath: [],
       travelStartTime: 0,
       travelFinishTime: 0,
@@ -87,7 +88,7 @@ export default function GameView() {
   }
 
   function travel(): void {
-    if (piece.state === 'travel') {
+    if (piece.state === TravelState.travel) {
       const currentTime = new Date().getTime();
       if (currentTime > piece.travelFinishTime) {
         finishTravel();
