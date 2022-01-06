@@ -1,7 +1,7 @@
 import './PieceView.css';
 import { Config } from '../Config';
 
-export default function PieceView({params}: any) {
+export default function PieceView({params}: any): JSX.Element {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles = {

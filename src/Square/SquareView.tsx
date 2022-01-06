@@ -1,7 +1,8 @@
 import './SquareView.css';
 import { Config } from '../Config';
+import { SquareViewProps } from './SquareView.props';
 
-export default function SquareView({params, onClick}: any) {
+export default function SquareView({params, onClick}: SquareViewProps) {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles = {

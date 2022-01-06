@@ -1,7 +1,7 @@
 import { useState, useEffect  } from 'react';
 import SquareView from '../Square/SquareView';
 import './GameView.css';
-import DirectPathFinderService from '../algorithms/AstarPathFinder/DirectPathFinder.service';
+import DirectPathFinderService from '../algorithms/DirectPathFinder/DirectPathFinder.service';
 import AstarPathFinderService from '../algorithms/AstarPathFinder/AstarPathFinder.service';
 import { Config } from '../Config';
 import { Obstacle } from './Obstacle';
@@ -9,6 +9,7 @@ import { Square } from '../Core/Square';
 import PieceView from '../Piece/PieceView';
 import { TravelSquare } from '../Core/TravelSquare';
 import { TravelState } from './TravelState.enum';
+import { Piece } from './Piece';
 
 const pathFinderService = new AstarPathFinderService();
 
@@ -41,11 +42,11 @@ export default function GameView() {
     }
   }
 
-  const [piece, setPiece] = useState({
+  const [piece, setPiece] = useState<Piece>({
     x: 2,
     y: 2,
-    state: TravelState.stay as TravelState,
-    travelPath: [] as TravelSquare[],
+    state: TravelState.stay,
+    travelPath: [],
     travelStartTime: 0,
     travelFinishTime: 0,
   });
