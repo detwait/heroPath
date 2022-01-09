@@ -8,6 +8,8 @@ import { TravelState } from './TravelState.enum';
 import { Piece } from './Piece';
 import { GameService } from './Game.service';
 
+const gameService = new GameService();
+
 export default function GameView() {
   const styles: React.CSSProperties = {
     width: `${Config.boardSideLength}px`,
@@ -15,20 +17,23 @@ export default function GameView() {
   };
 
   const [piece, setPiece] = useState<Piece>({
-    x: 2,
-    y: 2,
+    ...gameService.pieceStartPoint,
     state: TravelState.stay,
     travelPath: [],
     travelStartTime: 0,
     travelFinishTime: 0,
   });
 
-  let gameService = new GameService(piece, setPiece);
-  useEffect(() => gameService.setTimer());
+  useEffect(() => gameService.setTimer(piece, setPiece), [piece]);
 
   return (
     <div className="Board" style={styles}>
-      { gameService.squares.map(square => <SquareView key={square.id} params={square} onClick={() => gameService.startTravel(square)} />) }
+      { gameService.squares.map(square => <SquareView 
+        key={square.id}
+        square={square}
+        isObstacle={gameService.isObstacle(square)}
+        onClick={ () => gameService.startTravel(piece, setPiece, square)} 
+      />) }
       <PieceView params={piece} />
     </div>
   );

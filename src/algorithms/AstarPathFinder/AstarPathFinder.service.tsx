@@ -2,11 +2,13 @@ import { TravelSquare } from "../../Core/TravelSquare";
 import { FindPathInput } from "../../Core/FindPath.input";
 import { AstarNode } from "./AstarNode";
 import { AstarNodeStatus } from "./AstarNodeStatus.enum";
+import { Point } from "../../Core/Point";
+
 
 export default class AstarPathFinderService {
   grid: AstarNode[] = [];
 
-  findPath({ commonGrid, start, end }: FindPathInput): TravelSquare[] {
+  findPath({ commonGrid, start, end, obstacles }: FindPathInput): TravelSquare[] {
     this.grid = commonGrid.map(i => ({
       ...i,
       parent: null,
@@ -14,6 +16,7 @@ export default class AstarPathFinderService {
       h: null,
       f: null,
       status: AstarNodeStatus.notVisided,
+      isObstacle: !!obstacles.find((j: Point) => j.x === i.x && j.y === i.y),
     }));
 
     const startNode: AstarNode | undefined = this.getNode(start.x, start.y);
