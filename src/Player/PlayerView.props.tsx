@@ -1,6 +1,6 @@
 import { TravelSquare } from "../Core/TravelSquare";
 
-export type PieceViewProps = {
+export type PlayerViewProps = {
   params: TravelSquare;
   children: React.ReactNode;
 }

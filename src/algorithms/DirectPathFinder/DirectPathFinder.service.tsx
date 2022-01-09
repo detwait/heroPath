@@ -1,8 +1,9 @@
-import { Square } from "../../Core/Square";
+
+import { Point } from "../../Core/Point";
 import { TravelSquare } from "../../Core/TravelSquare";
 
 export default class DirectPathFinderService {
-  findPath(start: Square, destination: Square): TravelSquare[] {
+  findPath(start: Point, destination: Point): TravelSquare[] {
     let travelPath: TravelSquare[] = [];
     let xOffset: number = destination.x - start.x > 0 ? 1 : -1;
     let yOffset: number = destination.y - start.y > 0 ? 1 : -1;  

@@ -1,7 +1,7 @@
-import './PieceView.css';
+import './PlayerView.css';
 import { Config } from '../Config';
 
-export default function PieceView({params}: any): JSX.Element {
+export default function PlayerView({params}: any): JSX.Element {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles = {
@@ -12,6 +12,6 @@ export default function PieceView({params}: any): JSX.Element {
   };
 
   return (
-    <div className="Piece" style={styles}></div>
+    <div className="Player" style={styles}></div>
   );
 }
