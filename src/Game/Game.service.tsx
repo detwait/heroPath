@@ -9,9 +9,7 @@ import { isPointSame } from "../Core/Geometry.utils";
 
 
 export class GameService {
-  timer: NodeJS.Timer | undefined;
   pathFinderService: AstarPathFinderService = new AstarPathFinderService();
-  PlayerStartPoint: Point = { x: 2, y: 2 };
 
   generatePlayer(): Player {
     return {
