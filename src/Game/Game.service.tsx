@@ -3,13 +3,15 @@ import { Point } from "../Core/Point";
 import { TravelState } from "./TravelState.enum";
 import DirectPathFinderService from '../algorithms/DirectPathFinder/DirectPathFinder.service';
 import AstarPathFinderService from '../algorithms/AstarPathFinder/AstarPathFinder.service';
+import JumpPointPathFinderService from "../algorithms/JumpPointPathFinder/JumpPointPathFinder.service";
 import { TravelSquare } from "../Core/TravelSquare";
 import { Player } from "./Player";
 import { isPointSame } from "../Core/Geometry.utils";
 
 
 export class GameService {
-  pathFinderService: AstarPathFinderService = new AstarPathFinderService();
+  // pathFinderService: AstarPathFinderService = new AstarPathFinderService();
+  pathFinderService: JumpPointPathFinderService = new JumpPointPathFinderService();
 
   generatePlayer(): Player {
     return {

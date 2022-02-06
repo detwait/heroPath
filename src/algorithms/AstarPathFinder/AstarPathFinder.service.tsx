@@ -3,6 +3,7 @@ import { FindPathInput } from "../../Core/FindPath.input";
 import { AstarNode } from "./AstarNode";
 import { AstarNodeStatus } from "./AstarNodeStatus.enum";
 import { Point } from "../../Core/Point";
+import { heuristic, pathFromParents } from "../../Core/Geometry.utils";
 
 
 export default class AstarPathFinderService {
@@ -27,7 +28,7 @@ export default class AstarPathFinderService {
     }
 
     startNode.g = 0;
-    startNode.h = this.heuristic(startNode, endNode);
+    startNode.h = heuristic(startNode, endNode);
     startNode.f = startNode.g + startNode.h;
     startNode.status = AstarNodeStatus.open;
 
@@ -36,17 +37,7 @@ export default class AstarPathFinderService {
       currentNode.status = AstarNodeStatus.closed;
 
       if (currentNode.x === end.x && currentNode.y === end.y) {
-        const foundPath = [];
-        let node = currentNode;
-
-        while(node.parent) {
-          foundPath.push(node);
-          node = node.parent;
-        }
-
-        foundPath.push(startNode);
-
-        return foundPath.reverse();
+        return pathFromParents(currentNode);
       } else {
         const neighbours: AstarNode[] = this.getNodeNeighbours(currentNode);
 
@@ -55,18 +46,18 @@ export default class AstarPathFinderService {
             continue;
           }
 
-          const g = (currentNode.g || 0) + 1;
+          const g: number = (currentNode.g || 0) + 1;
 
           if (!neighbour.g || neighbour.g > g) {
             Object.assign(neighbour, { g });
           } 
           
           if (neighbour.status === AstarNodeStatus.notVisided) {
-            const h = this.heuristic(neighbour, endNode);
+            const h: number = heuristic(neighbour, endNode);
 
             Object.assign(neighbour, {
               parent: currentNode,
-              status: 'OPEN',
+              status: AstarNodeStatus.open,
               h: h,
               f: g + h,
             });
@@ -82,9 +73,6 @@ export default class AstarPathFinderService {
     return this.grid.find(i => i.x === x && i.y === y);
   }
 
-  heuristic(node1: AstarNode, node2: AstarNode) {
-    return Math.abs(node2.x - node1.x) + Math.abs(node2.y - node1.y);
-  }
 
   getOpenedList() {
     return this.grid.filter(i => i.status === 'OPEN');
