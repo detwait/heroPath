@@ -43,8 +43,8 @@ export class GameService {
 
     for (let i = 0; i < amount; i++) {
       const newObstacle: Point = {
-        x: Math.floor(Math.random() * xSquaresAmount),
-        y: Math.floor(Math.random() * ySquaresAmount),
+        x: Math.floor(Math.random() * (xSquaresAmount - 1)) + 1,
+        y: Math.floor(Math.random() * (ySquaresAmount - 1)) + 1,
       };
 
       if (!isPointSame(player, newObstacle)) {

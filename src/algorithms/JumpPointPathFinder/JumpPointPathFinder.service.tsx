@@ -79,18 +79,14 @@ export default class JumpPointPathFinderService {
         const ng: number = currentNode.g || 0 + d; 
 
         if (!jumpPoint.g || ng < (jumpPoint.g || 0)) {
-          Object.assign(jumpPoint, {
-            g: ng,
-          });
+          jumpPoint.g = ng;
         }
 
         if (jumpPoint.status === JumpPointNodeStatus.notVisided) {
-          Object.assign(jumpPoint, {
-            h: jumpPoint.h || heuristic(jumpPoint, this.endNode),
-            f: (jumpPoint.g || 0) + (jumpPoint.h || 0),
-            parent: currentNode,
-            status: JumpPointNodeStatus.open,
-          });
+          jumpPoint.h = jumpPoint.h || heuristic(jumpPoint, this.endNode);
+          jumpPoint.f = (jumpPoint.g || 0) + (jumpPoint.h || 0);
+          jumpPoint.parent = currentNode;
+          jumpPoint.status = JumpPointNodeStatus.open;
         }
       }
     }
@@ -161,8 +157,8 @@ export default class JumpPointPathFinderService {
     }
     
     const { x, y } = point;
-    const dx = x - px;
-    const dy = y - py;
+    const dx: number = x - px;
+    const dy: number = y - py;
 
     if (!this.isNodeWalkable(this.getNode(x, y))) {
       return null;
