@@ -8,6 +8,7 @@ import { Point } from '../Core/Point';
 import { isPointSame } from '../Core/Geometry.utils';
 import Character from '../Character/Character';
 import CharacterView from '../Character/CharacterView';
+import ObstacleView from '../Obstacle/ObstacleView';
 
 const gameService = new GameService();
 
@@ -73,12 +74,16 @@ export default function GameView() {
         </div>
         <div className="Board" style={styles}>
           { gameService.squares.map(square => <SquareView 
-            key={square.x + '_' + square.y}
+            key={'square' + square.x + '_' + square.y}
             square={square}
             isObstacle={gameService.isObstacle(square)}
             onClick={ () => startTravel(square)} 
           />) }
-          <CharacterView params={player} />
+          { gameService.obstacles.map(obstacle => <ObstacleView 
+            key={'obstacle_' + obstacle.x + '_' + obstacle.y}
+            obstacle={obstacle}
+          />) }
+          <CharacterView player={player} />
         </div>
       </main>
       <footer>
