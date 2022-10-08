@@ -8,12 +8,16 @@ import PathFinderGeneratorService from "../algorithms/PathFinderGenerator.servic
 import CharacterService from "../Character/Character.service";
 import CharacterCreateInput from "../Character/CharacterCreate.input";
 import Character from "../Character/Character";
+import ObstacleService from "../Obstacle/Obstacle.service";
+import { Obstacle } from "../Obstacle/Obstacle";
+import ObstacleCreateInput from "../Obstacle/ObstacleCreate.input";
 
 export class GameService {
   squares: Point[] = [];
-  obstacles: Point[] = [];
+  obstacles: Obstacle[] = [];
   characters: Character[] = [];
   characterService: CharacterService = new CharacterService();
+  obstacleService: ObstacleService = new ObstacleService();
   pathFinderService: PathFinder = new PathFinderGeneratorService().getPathFinderService(Config.pathFinderAlgorithm);
 
   constructor() {
@@ -48,15 +52,18 @@ export class GameService {
     return player;
   }
 
-  generateObstacles(xSquaresAmount: number, ySquaresAmount: number): Point[] {
-    const obstacles: Point[] = [];
+  generateObstacles(xSquaresAmount: number, ySquaresAmount: number): Obstacle[] {
+    const obstacles: Obstacle[] = [];
     const amount = Math.floor(Math.pow(xSquaresAmount, 2) / 30);
 
     for (let i = 0; i < amount; i++) {
-      const newObstacle: Point = {
+      const newObstacleInput: ObstacleCreateInput = {
         x: Math.floor(Math.random() * (xSquaresAmount - 1)) + 1,
         y: Math.floor(Math.random() * (ySquaresAmount - 1)) + 1,
+        skin: Config.skins.rock,
       };
+
+      const newObstacle: Obstacle = this.obstacleService.create(newObstacleInput);
 
       if (this.characters.every((character: Character) => !isPointSame(character, newObstacle))) {
         obstacles.push(newObstacle);

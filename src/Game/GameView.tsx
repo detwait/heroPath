@@ -74,7 +74,7 @@ export default function GameView() {
         </div>
         <div className="Board" style={styles}>
           { gameService.squares.map(square => <SquareView 
-            key={'square' + square.x + '_' + square.y}
+            key={'square_' + square.x + '_' + square.y}
             square={square}
             isObstacle={gameService.isObstacle(square)}
             onClick={ () => startTravel(square)} 

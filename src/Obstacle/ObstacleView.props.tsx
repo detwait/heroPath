@@ -1,6 +1,6 @@
-import { Point } from "../Core/Point";
+import { Obstacle } from "./Obstacle";
 
 export type ObstacleViewProps = {
-  obstacle: Point;
+  obstacle: Obstacle;
   children?: React.ReactNode;
 }

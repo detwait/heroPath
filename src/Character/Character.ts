@@ -3,7 +3,7 @@ import { TravelSquare } from "../Core/TravelSquare";
 import { TravelState } from "../Game/TravelState.enum";
 import CharacterCreateInput from "./CharacterCreate.input";
 
-export default class Character {
+export default class Character implements Point {
 	isPlayer: boolean = false;
 	name: string = 'default';
 	skin: string = '';

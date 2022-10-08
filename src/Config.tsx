@@ -1,5 +1,10 @@
 import CharacterCreateInput from "./Character/CharacterCreate.input"
 
+const skins: Record<string, string> = {
+  ninja: "ninja.png",
+  rock: "rock.png",
+};
+
 type ConfigType = {
   pathFinderAlgorithm: 'astar' | 'pointjump',
   boardSideLength: number,
@@ -8,6 +13,7 @@ type ConfigType = {
   appIntervalFrequencyMiliseconds: number,
   levelExpMap: Record<number, number>,
   characters: CharacterCreateInput[],
+  skins: Record<string, string>,
 }
 
 export const Config: ConfigType = {
@@ -27,7 +33,9 @@ export const Config: ConfigType = {
 		6: 15000,
 	},
 
+  skins,
+
   characters: [
-    { isPlayer: true, name: 'Ninja', skin: "ninja.png", level: 1, strength: 1, agility: 1, nativeHp: 10, x: 2, y: 2 },
+    { isPlayer: true, name: 'Ninja', skin: skins.ninja, level: 1, strength: 1, agility: 1, nativeHp: 10, x: 2, y: 2 },
   ]
 }
