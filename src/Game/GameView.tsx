@@ -60,6 +60,7 @@ export default function GameView() {
       </header>
       <main>
         <div className="Player">
+          <p><img src={`${process.env.PUBLIC_URL}/images/avatars/${player.avatar}`} alt="avatar" /></p>
           <p>Name: {player.name}</p>
           <p>Level: {player.level}</p>
           <p>Strength: {player.strength}</p>
