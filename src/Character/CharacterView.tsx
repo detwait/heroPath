@@ -1,7 +1,7 @@
-import './PlayerView.css';
+import './CharacterView.css';
 import { Config } from '../Config';
 
-export default function PlayerView({params}: any): JSX.Element {
+export default function CharacterView({params}: any): JSX.Element {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles = {
@@ -9,9 +9,12 @@ export default function PlayerView({params}: any): JSX.Element {
     height: `${sideLength}px`,
     top:  (params.y - 1) * sideLength + 'px',
     left: (params.x - 1) * sideLength + 'px',
+    background: `url('${process.env.PUBLIC_URL}/images/${params.skin}')`,
   };
 
+  console.log(styles);
+
   return (
-    <div className="Player" style={styles}></div>
+    <div className="Character" style={styles}></div>
   );
 }

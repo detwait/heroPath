@@ -1,28 +1,25 @@
 import { Config } from "../Config";
 import { Point } from "../Core/Point";
 import { TravelState } from "./TravelState.enum";
-import DirectPathFinderService from '../algorithms/DirectPathFinder/DirectPathFinder.service';
-import AstarPathFinderService from '../algorithms/AstarPathFinder/AstarPathFinder.service';
-import JumpPointPathFinderService from "../algorithms/JumpPointPathFinder/JumpPointPathFinder.service";
 import { TravelSquare } from "../Core/TravelSquare";
-import { Player } from "./Player";
 import { isPointSame } from "../Core/Geometry.utils";
-
+import PathFinder from "../algorithms/PathFinder.interface";
+import PathFinderGeneratorService from "../algorithms/PathFinderGenerator.service";
+import CharacterService from "../Character/Character.service";
+import CharacterCreateInput from "../Character/CharacterCreate.input";
+import Character from "../Character/Character";
 
 export class GameService {
-  // pathFinderService: AstarPathFinderService = new AstarPathFinderService();
-  pathFinderService: JumpPointPathFinderService = new JumpPointPathFinderService();
+  squares: Point[] = [];
+  obstacles: Point[] = [];
+  characters: Character[] = [];
+  characterService: CharacterService = new CharacterService();
+  pathFinderService: PathFinder = new PathFinderGeneratorService().getPathFinderService(Config.pathFinderAlgorithm);
 
-  generatePlayer(): Player {
-    return {
-      x: 2,
-      y: 2,
-      state: TravelState.stay,
-      travelPath: [],
-      travelStartTime: 0,
-      travelFinishTime: 0,
-      destination: {x: 2, y: 2}
-    };
+  constructor() {
+    this.squares = this.generateSquares(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount);
+    this.characters = this.addCharacters();
+    this.obstacles = this.generateObstacles(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount);
   }
 
   generateSquares(xAmount: number, yAmount: number): Point[] {
@@ -37,7 +34,21 @@ export class GameService {
     return squares;
   }
 
-  generateObstacles(player: Player, xSquaresAmount: number, ySquaresAmount: number): Point[] {
+  addCharacters(): Character[] {
+    return Config.characters.map((input: CharacterCreateInput) => this.characterService.create(input))
+  }
+
+  getPlayer(): Character {
+    const player: Character | undefined = this.characters.find(({ isPlayer }: Character) => isPlayer);
+
+    if (!player) {
+      throw new Error('No player among characters');
+    }
+
+    return player;
+  }
+
+  generateObstacles(xSquaresAmount: number, ySquaresAmount: number): Point[] {
     const obstacles: Point[] = [];
     const amount = Math.floor(Math.pow(xSquaresAmount, 2) / 30);
 
@@ -47,7 +58,7 @@ export class GameService {
         y: Math.floor(Math.random() * (ySquaresAmount - 1)) + 1,
       };
 
-      if (!isPointSame(player, newObstacle)) {
+      if (this.characters.every((character: Character) => !isPointSame(character, newObstacle))) {
         obstacles.push(newObstacle);
       }
     }
@@ -55,20 +66,20 @@ export class GameService {
     return obstacles;
   }
 
-  isObstacle(obstacles: Point[], point: Point): boolean {
-    return obstacles.some(i => isPointSame(i, point));
+  isObstacle(point: Point): boolean {
+    return this.obstacles.some(i => isPointSame(i, point));
   }
 
-  startTravel(player: Player, squares: Point[], obstacles: Point[], destination: Point): Partial<Player> {
-    if (destination.x && destination.y && !isPointSame(player, destination) && player.state === TravelState.stay) {
-      const travelPath: TravelSquare[] = this.pathFinderService.findPath({ start: player, end: destination, commonGrid: squares, obstacles });
+  startTravel(character: Character, destination: Point): Partial<Character> {
+    if (destination.x && destination.y && !isPointSame(character, destination) && character.state === TravelState.stay) {
+      const travelPath: TravelSquare[] = this.pathFinderService.findPath({ start: character, end: destination, commonGrid: this.squares, obstacles: this.obstacles });
       
       if (travelPath && travelPath.length > 0) {
         const travelStartTime: number = new Date().getTime();
         const travelFinishTime: number  = travelStartTime + travelPath.length * Config.milisecondsForSquareSpeed;
 
         return {
-          ...player,
+          ...character,
           travelPath,
           state: TravelState.travel,
           travelStartTime,
@@ -81,8 +92,8 @@ export class GameService {
     return {};
   }
 
-  finishTravel(player: Player): Partial<Player> {
-    const { x, y } = player.travelPath[player.travelPath.length - 1];
+  finishTravel(character: Character): Partial<Character> {
+    const { x, y } = character.travelPath[character.travelPath.length - 1];
 
     return {
       x,
@@ -94,22 +105,22 @@ export class GameService {
     };
   }
 
-  travel(player: Player): Partial<Player> {
-    let newPlayerPoint: Point = { x: player.x, y: player.y };
+  travel(character: Character): Partial<Character> {
+    let newCharacterPoint: Point = { x: character.x, y: character.y };
 
-    if (player.state === TravelState.travel) {
+    if (character.state === TravelState.travel) {
       const currentTime = new Date().getTime();
-      if (currentTime > player.travelFinishTime) {
-        newPlayerPoint = player.travelPath[player.travelPath.length - 1];
+      if (currentTime > character.travelFinishTime) {
+        newCharacterPoint = character.travelPath[character.travelPath.length - 1];
       } else {
         const currectTravelSquareIndex = Math.floor(
-          (player.travelPath.length - 1) * (currentTime - player.travelStartTime) / (player.travelFinishTime - player.travelStartTime)
+          (character.travelPath.length - 1) * (currentTime - character.travelStartTime) / (character.travelFinishTime - character.travelStartTime)
         );
 
-        newPlayerPoint = player.travelPath[currectTravelSquareIndex];
+        newCharacterPoint = character.travelPath[currectTravelSquareIndex];
       }
     }
 
-    return newPlayerPoint;
+    return newCharacterPoint;
   }
 } 

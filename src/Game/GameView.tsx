@@ -1,14 +1,13 @@
 import { useState, useEffect  } from 'react';
 import SquareView from '../Square/SquareView';
 import './GameView.css';
-
 import { Config } from '../Config';
-import PlayerView from '../Player/PlayerView';
 import { TravelState } from './TravelState.enum';
-import { Player } from './Player';
 import { GameService } from './Game.service';
 import { Point } from '../Core/Point';
 import { isPointSame } from '../Core/Geometry.utils';
+import Character from '../Character/Character';
+import CharacterView from '../Character/CharacterView';
 
 const gameService = new GameService();
 
@@ -18,23 +17,17 @@ export default function GameView() {
     height: `${Config.boardSideLength}px`,
   };
 
-  const [squares] = useState<Point[]>(gameService.generateSquares(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount));
-  const [player, setPlayer] = useState<Player>(gameService.generatePlayer());
-  const [obstacles, setObstacles] = useState(gameService.generateObstacles(player, Config.boardSideSquaresAmount, Config.boardSideSquaresAmount));
+  const [player, setPlayer] = useState<Character>(gameService.getPlayer());
 
   useEffect(() => {
     const timer = setInterval(() => { travel(); }, Config.appIntervalFrequencyMiliseconds);
     return () => { timer && clearInterval(timer); };
   });
 
-  function regenerateObstacles(): void {
-    setObstacles(gameService.generateObstacles(player, Config.boardSideSquaresAmount, Config.boardSideSquaresAmount)); 
-  }
-
   function startTravel(destination: Point): void {
     setPlayer({
       ...player,
-      ...gameService.startTravel(player, squares, obstacles, destination)
+      ...gameService.startTravel(player, destination)
     });
   }
 
@@ -46,7 +39,7 @@ export default function GameView() {
   }
 
   function travel() {
-    const {x, y}: Partial<Player> = gameService.travel(player);
+    const {x, y}: Partial<Character> = gameService.travel(player);
 
     if (!x || !y) {
       return;
@@ -66,17 +59,30 @@ export default function GameView() {
   }
 
   return (
-    <div>
-      <button onClick={() => regenerateObstacles()}>New obstacles</button>
-      <div className="Board" style={styles}>
-        { squares.map(square => <SquareView 
-          key={square.x + '_' + square.y}
-          square={square}
-          isObstacle={gameService.isObstacle(obstacles, square)}
-          onClick={ () => startTravel(square)} 
-        />) }
-        <PlayerView params={player} />
-      </div>
+    <div className='Game'>
+      <header>
+        <h1>Hero Path</h1>
+      </header>
+      <main>
+        <div className="Player">
+          <p>Name: {player.name}</p>
+          <p>Level: {player.level}</p>
+          <p>Strength: {player.strength}</p>
+          <p>Agility: {player.agility}</p>
+          <p>Health: {player.hp} / {player.maxHp}</p>
+        </div>
+        <div className="Board" style={styles}>
+          { gameService.squares.map(square => <SquareView 
+            key={square.x + '_' + square.y}
+            square={square}
+            isObstacle={gameService.isObstacle(square)}
+            onClick={ () => startTravel(square)} 
+          />) }
+          <CharacterView params={player} />
+        </div>
+      </main>
+      <footer>
+      </footer>
     </div>
   );
 };

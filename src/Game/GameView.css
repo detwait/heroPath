@@ -1,5 +1,35 @@
+.Game {
+  display: flex;
+  height: 100vh;
+  flex-flow: column;
+}
+
+title {
+  height: 75px;
+}
+
+main {
+  display: flex;
+  width: 1100px;
+  height: 800px;
+}
+
+.Player {
+  position: relative;
+  background-color: darkslategrey;
+  width: 300px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
 .Board {
   position: relative;
   float: left;
   background-color:bisque;
+  align-self: center;
+}
+
+footer {
+  height: 30px;
 }
