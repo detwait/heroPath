@@ -18,7 +18,8 @@ export default function GameView() {
     height: `${Config.boardSideLength}px`,
   };
 
-  const [player, setPlayer] = useState<Character>(gameService.getPlayer());
+  const [characters, setCharacters] = useState<Character[]>(gameService.characters);
+  const player: Character = gameService.getPlayer(characters);
 
   useEffect(() => {
     const timer = setInterval(() => { travel(); }, Config.appIntervalFrequencyMiliseconds);
@@ -26,17 +27,13 @@ export default function GameView() {
   });
 
   function startTravel(destination: Point): void {
-    setPlayer({
-      ...player,
-      ...gameService.startTravel(player, destination)
-    });
+    Object.assign(player, gameService.startTravel(player, destination));
+    setCharacters([...characters]);
   }
 
   function finishTravel(): void {
-    setPlayer({
-      ...player,
-      ...gameService.finishTravel(player)
-    });
+    Object.assign(player, gameService.finishTravel(player));
+    setCharacters([...characters]);
   }
 
   function travel() {
@@ -51,11 +48,8 @@ export default function GameView() {
         finishTravel();
       }
     } else {
-      setPlayer({
-        ...player,
-        x,
-        y,
-      });
+      Object.assign(player, { x, y});
+      setCharacters([...characters]);
     }
   }
 
@@ -83,7 +77,10 @@ export default function GameView() {
             key={'obstacle_' + obstacle.x + '_' + obstacle.y}
             obstacle={obstacle}
           />) }
-          <CharacterView player={player} />
+          { characters.map(character => <CharacterView 
+            key={'character_' + character.name}
+            character={character}
+          />) }
         </div>
       </main>
       <footer>

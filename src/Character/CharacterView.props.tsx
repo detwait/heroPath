@@ -1,6 +1,6 @@
 import Character from "./Character";
 
 export type CharacterViewProps = {
-  player: Character;
+  character: Character;
   children?: React.ReactNode;
 }

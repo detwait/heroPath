@@ -42,8 +42,8 @@ export class GameService {
     return Config.characters.map((input: CharacterCreateInput) => this.characterService.create(input))
   }
 
-  getPlayer(): Character {
-    const player: Character | undefined = this.characters.find(({ isPlayer }: Character) => isPlayer);
+  getPlayer(characters: Character[]): Character {
+    const player: Character | undefined = characters.find(({ isPlayer }: Character) => isPlayer);
 
     if (!player) {
       throw new Error('No player among characters');
@@ -65,7 +65,8 @@ export class GameService {
 
       const newObstacle: Obstacle = this.obstacleService.create(newObstacleInput);
 
-      if (this.characters.every((character: Character) => !isPointSame(character, newObstacle))) {
+      if (this.characters.every((character: Character) => !isPointSame(character, newObstacle)) 
+      && obstacles.every((obstacle: Obstacle) => !isPointSame(obstacle, newObstacle))) {
         obstacles.push(newObstacle);
       }
     }
