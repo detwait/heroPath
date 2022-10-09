@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Tooltip } from 'react-tippy';
 import './GameView.css';
 import 'react-tippy/dist/tippy.css'
 import { Config } from '../Config';
@@ -11,10 +10,9 @@ import { Seed } from '../Seed';
 import { SquareView } from '../Square';
 import { ObstacleView } from '../Obstacle';
 import { Character, CharacterView } from '../Character';
-import { ImageService, ImageType } from '../_Shared/image';
 import { Item, ItemView } from '../Item';
+import { GamePlayerInfoView } from './GamePlayerInfoView';
 
-const imageService: ImageService = new ImageService();
 const gameService = new GameService({ ...Seed });
 
 export function GameView() {
@@ -77,25 +75,10 @@ export function GameView() {
         <h1>Hero Path</h1>
       </header>
       <main>
-        <div className="Player">
-          <p>
-            <img src={`${imageService.getPath(ImageType.avatar, player.avatar)}`} alt="avatar" />
-          </p>
-          <p>Name: {player.name}</p>
-          <p>Level: {player.level}</p>
-          <p>Strength: {player.strength}</p>
-          <p>Agility: {player.agility}</p>
-          <p>Health: {player.hp} / {player.maxHp}</p>
-          <div className="Inventar">
-            { playerItems.map(item => 
-            <Tooltip title={item.description} arrow={true}  key={'item_' + item.id}>
-              <div className="InventarItem">
-                <img src={`${imageService.getPath(ImageType.avatar, item.avatar)}`} alt="avatar" />
-              </div>
-            </Tooltip>
-            )}
-          </div>
-        </div>
+        <GamePlayerInfoView
+          player={player}
+          playerItems={playerItems}>
+        </GamePlayerInfoView>
         <div className="Board" style={styles}>
           { gameService.squares.map(square => <SquareView 
             key={'square_' + square.x + '_' + square.y}
