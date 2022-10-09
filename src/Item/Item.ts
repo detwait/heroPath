@@ -5,6 +5,7 @@ export class Item implements IdEntity {
   id: string;
   ownerId: string = '';
   name: string = "default";
+  description: string;
   skin: string;
 	avatar: string;
   strength: number = 0;
@@ -15,6 +16,7 @@ export class Item implements IdEntity {
   constructor({
     id,
     name,
+    description,
     skin,
 		avatar,
     strength,
@@ -26,6 +28,7 @@ export class Item implements IdEntity {
     this.id = id;
     this.ownerId = ownerId;
     this.name = name;
+    this.description = description;
     this.skin = skin;
     this.avatar = avatar;
     this.strength = strength;

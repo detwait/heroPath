@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Tooltip } from 'react-tippy';
 import './GameView.css';
+import 'react-tippy/dist/tippy.css'
 import { Config } from '../Config';
 import { TravelState } from './TravelState.enum';
 import { GameService } from './Game.service';
@@ -86,10 +88,12 @@ export function GameView() {
           <p>Health: {player.hp} / {player.maxHp}</p>
           <div className="Inventar">
             { playerItems.map(item => 
-            <div className="InventarItem" key={'item_' + item.id}>
-              <img src={`${imageService.getPath(ImageType.avatar, item.avatar)}`} alt="avatar" />
-            </div>) 
-            }
+            <Tooltip title={item.description} arrow={true}  key={'item_' + item.id}>
+              <div className="InventarItem">
+                <img src={`${imageService.getPath(ImageType.avatar, item.avatar)}`} alt="avatar" />
+              </div>
+            </Tooltip>
+            )}
           </div>
         </div>
         <div className="Board" style={styles}>

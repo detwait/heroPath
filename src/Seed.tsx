@@ -19,7 +19,27 @@ export const Seed: SeedType = {
   ],
 
   items: [
-    { id: 'ringAgility', name: 'Ring of Agility', skin: skins.ringAgility, avatar: avatars.ringAgility, strength: 1, agility: 0, x: 20, y: 20, ownerId: '' },
-    { id: 'ringStrength', name: 'Ring of Strength', skin: skins.ringStrength, avatar: avatars.ringStrength, strength: 1, agility: 0, ownerId: 'ninja' },
+    {
+      id: 'ringAgility',
+      name: 'Ring of Agility',
+      description: 'I feel quicker with this ring. <br> Agility +1',
+      skin: skins.ringAgility,
+      avatar: avatars.ringAgility,
+      strength: 1,
+      agility: 0,
+      x: 20,
+      y: 20, 
+      ownerId: '',
+    },
+    {
+      id: 'ringStrength',
+      name: 'Ring of Strength',
+      description: 'It fills me with power. <br> Strength +1',
+      skin: skins.ringStrength,
+      avatar: avatars.ringStrength,
+      strength: 1,
+      agility: 0,
+      ownerId: 'ninja'
+    },
   ],
 }
