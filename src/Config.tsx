@@ -21,9 +21,13 @@ export const Config: ConfigType = {
     troll: "troll.png",
     golem: "golem.png",
     dragon: "dragon.png",
+    ringStrength: "ring_strength.png",
+    ringAgility: "ring_agility.png",
   },
   avatars: {
     ninja: "ninja.png",
+    ringStrength: "ring_strength.png",
+    ringAgility: "ring_agility.png",
   },
 
   levelExpMap: {

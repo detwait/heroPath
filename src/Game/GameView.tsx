@@ -10,6 +10,9 @@ import { SquareView } from '../Square';
 import { ObstacleView } from '../Obstacle';
 import { Character, CharacterView } from '../Character';
 import { ImageService, ImageType } from '../_Shared/image';
+import { Item, ItemView } from '../Item';
+
+console.log(Seed);
 
 const imageService: ImageService = new ImageService();
 const gameService = new GameService({ ...Seed });
@@ -21,7 +24,10 @@ export function GameView() {
   };
 
   const [characters, setCharacters] = useState<Character[]>(gameService.characters);
+  const [items, setItems] = useState<Item[]>(gameService.items);
   const player: Character = gameService.getPlayer(characters);
+  const playerItems: Item[] = gameService.getCharacterItems(player, items);
+  const groundItems: Item[] = gameService.getGroundItems(items);
 
   useEffect(() => {
     const timer = setInterval(() => { travel(); }, Config.appIntervalFrequencyMiliseconds);
@@ -43,6 +49,16 @@ export function GameView() {
 
     if (!x || !y) {
       return;
+    }
+    
+    const itemFound: Item | undefined = gameService.isCharacterOnItem({x, y});
+
+    if (itemFound) {
+      Object.assign(itemFound, {
+        ...(gameService.characterClaimItem(player, itemFound))
+      });
+
+      setItems([ ...items ]);
     }
 
     if(isPointSame(player.destination, {x, y})) {
@@ -70,6 +86,13 @@ export function GameView() {
           <p>Strength: {player.strength}</p>
           <p>Agility: {player.agility}</p>
           <p>Health: {player.hp} / {player.maxHp}</p>
+          <div className="Inventar">
+            { playerItems.map(item => 
+            <div className="InventarItem" key={'item_' + item.id}>
+              <img src={`${imageService.getPath(ImageType.avatar, item.avatar)}`} alt="avatar" />
+            </div>) 
+            }
+          </div>
         </div>
         <div className="Board" style={styles}>
           { gameService.squares.map(square => <SquareView 
@@ -81,6 +104,10 @@ export function GameView() {
           { gameService.obstacles.map(obstacle => <ObstacleView 
             key={obstacle.id}
             obstacle={obstacle}
+          />) }
+          { groundItems.map(item => <ItemView 
+            key={item.id}
+            item={item}
           />) }
           { characters.map(character => <CharacterView 
             key={character.id}

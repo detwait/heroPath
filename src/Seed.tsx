@@ -19,6 +19,7 @@ export const Seed: SeedType = {
   ],
 
   items: [
-    { id: 'ringOfStrength', name: 'Ring of Strength', skin: skins.dragon, strength: 1, agility: 0, x: 20, y: 20, ownerId: '' },
+    { id: 'ringAgility', name: 'Ring of Agility', skin: skins.ringAgility, avatar: avatars.ringAgility, strength: 1, agility: 0, x: 20, y: 20, ownerId: '' },
+    { id: 'ringStrength', name: 'Ring of Strength', skin: skins.ringStrength, avatar: avatars.ringStrength, strength: 1, agility: 0, ownerId: 'ninja' },
   ],
 }
