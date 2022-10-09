@@ -8,7 +8,7 @@ const imageService: ImageService = new ImageService();
 export function ObstacleView({ entity }: ObstacleViewProps) {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
-  const styles: any = {
+  const styles: React.CSSProperties = {
     width: `${sideLength}px`,
     height: `${sideLength}px`,
     top:  (entity.y - 1) * sideLength + 'px',

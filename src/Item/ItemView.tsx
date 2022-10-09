@@ -10,7 +10,7 @@ export function ItemView({ entity, onClick }: ItemViewProps): JSX.Element {
     if (!entity.ownerId) {
     const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
-    const styles = {
+    const styles: React.CSSProperties = {
       width: `${sideLength}px`,
       height: `${sideLength}px`,
       top:  (entity.y - 1) * sideLength + 'px',

@@ -5,7 +5,7 @@ import { SquareViewProps } from './SquareView.props';
 export function SquareView({entity, onClick}: SquareViewProps) {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
-  const styles: any = {
+  const styles: React.CSSProperties = {
     width: `${sideLength}px`,
     height: `${sideLength}px`,
   };
