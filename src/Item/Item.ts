@@ -1,7 +1,7 @@
-import { IdEntity } from "../Core/IdEntity.interface";
+import { IdEntity } from "../_Core/IdEntity.interface";
 import { ItemCreateInput } from "./ItemCreateInput.interface";
 
-export default class Item implements IdEntity {
+export class Item implements IdEntity {
   id: string;
   ownerId: string = '';
   name: string = "default";

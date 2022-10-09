@@ -1,4 +1,4 @@
-export default class ObstacleCreateInput {
+export class ObstacleCreateInput {
 	x!: number;
 	y!: number;
 	skin!: string;

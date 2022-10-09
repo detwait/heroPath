@@ -1,5 +1,4 @@
-import { Point } from "../Core/Point";
-
+import { Point } from "../_Core/Point";
 
 export type SquareViewProps = {
   square: Point;

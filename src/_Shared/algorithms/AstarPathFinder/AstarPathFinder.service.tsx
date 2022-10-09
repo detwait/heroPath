@@ -1,13 +1,12 @@
-import { TravelSquare } from "../../Core/TravelSquare";
-import { FindPathInput } from "../../Core/FindPath.input";
+import { TravelSquare } from "../../../_Core/TravelSquare";
+import { FindPathInput } from "../../../_Core/FindPath.input";
 import { AstarNode } from "./AstarNode";
 import { AstarNodeStatus } from "./AstarNodeStatus.enum";
-import { Point } from "../../Core/Point";
-import { heuristic, pathFromParents } from "../../Core/Geometry.utils";
-import PathFinder from "../PathFinder.interface";
+import { Point } from "../../../_Core/Point";
+import { heuristic, pathFromParents } from "../../../_Core/Geometry.utils";
+import { PathFinder } from "../PathFinder.interface";
 
-
-export default class AstarPathFinderService implements PathFinder {
+export class AstarPathFinderService implements PathFinder {
   grid: AstarNode[] = [];
 
   findPath({ commonGrid, start, end, obstacles }: FindPathInput): TravelSquare[] {

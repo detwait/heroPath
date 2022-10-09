@@ -1,13 +1,12 @@
-import { TravelSquare } from "../../Core/TravelSquare";
-import { FindPathInput } from "../../Core/FindPath.input";
-import { Point } from "../../Core/Point";
-import { expandPath, heuristic, manhattan, pathFromParents } from "../../Core/Geometry.utils";
+import { TravelSquare } from "../../../_Core/TravelSquare";
+import { FindPathInput } from "../../../_Core/FindPath.input";
+import { Point } from "../../../_Core/Point";
+import { expandPath, heuristic, manhattan, pathFromParents } from "../../../_Core/Geometry.utils";
 import { JumpPointNode } from "./JumpPointNode";
 import { JumpPointNodeStatus } from "./JumpPointNodeStatus.enum";
-import PathFinder from "../PathFinder.interface";
+import { PathFinder } from "../PathFinder.interface";
 
-
-export default class JumpPointPathFinderService implements PathFinder {
+export class JumpPointPathFinderService implements PathFinder {
   grid: JumpPointNode[] = [];
   obstacles: Point[] = [];
   startNode: JumpPointNode | undefined;

@@ -1,6 +1,7 @@
 import { CharacterCreateInput } from "./Character/CharacterCreateInput.interface";
-import { ItemCreateInput } from "./Item/ItemCreateInput.interface";
+
 import { Config } from "./Config";
+import { ItemCreateInput } from "./Item";
 
 const { skins, avatars } = Config;
 

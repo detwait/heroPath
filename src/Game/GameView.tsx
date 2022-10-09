@@ -1,19 +1,18 @@
-import { useState, useEffect  } from 'react';
-import SquareView from '../Square/SquareView';
+import { useState, useEffect } from 'react';
 import './GameView.css';
 import { Config } from '../Config';
 import { TravelState } from './TravelState.enum';
 import { GameService } from './Game.service';
-import { Point } from '../Core/Point';
-import { isPointSame } from '../Core/Geometry.utils';
-import Character from '../Character/Character';
-import CharacterView from '../Character/CharacterView';
-import ObstacleView from '../Obstacle/ObstacleView';
+import { Point } from '../_Core/Point';
+import { isPointSame } from '../_Core/Geometry.utils';
 import { Seed } from '../Seed';
+import { SquareView } from '../Square';
+import { ObstacleView } from '../Obstacle';
+import { Character, CharacterView } from '../Character';
 
 const gameService = new GameService({ ...Seed });
 
-export default function GameView() {
+export function GameView() {
   const styles: React.CSSProperties = {
     width: `${Config.boardSideLength}px`,
     height: `${Config.boardSideLength}px`,

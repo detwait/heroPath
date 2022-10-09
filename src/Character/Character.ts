@@ -1,10 +1,10 @@
-import { IdEntity } from "../Core/IdEntity.interface";
-import { Point } from "../Core/Point";
-import { TravelSquare } from "../Core/TravelSquare";
+import { IdEntity } from "../_Core/IdEntity.interface";
+import { Point } from "../_Core/Point";
+import { TravelSquare } from "../_Core/TravelSquare";
 import { TravelState } from "../Game/TravelState.enum";
 import { CharacterCreateInput } from "./CharacterCreateInput.interface";
 
-export default class Character implements IdEntity, Point {
+export class Character implements IdEntity, Point {
   isPlayer: boolean = false;
   id: string;
   name: string = "default";

@@ -2,7 +2,7 @@ import './CharacterView.css';
 import { Config } from '../Config';
 import { CharacterViewProps } from './CharacterView.props';
 
-export default function CharacterView({character}: CharacterViewProps): JSX.Element {
+export function CharacterView({character}: CharacterViewProps): JSX.Element {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles = {

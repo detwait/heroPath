@@ -2,7 +2,7 @@ import './ObstacleView.css';
 import { Config } from '../Config';
 import { ObstacleViewProps } from './ObstacleView.props';
 
-export default function ObstacleView({obstacle}: ObstacleViewProps) {
+export function ObstacleView({obstacle}: ObstacleViewProps) {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles: any = {

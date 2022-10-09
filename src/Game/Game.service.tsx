@@ -1,20 +1,16 @@
 import { Config } from "../Config";
-import { Point } from "../Core/Point";
+import { Point } from "../_Core/Point";
 import { TravelState } from "./TravelState.enum";
-import { TravelSquare } from "../Core/TravelSquare";
-import { isPointSame } from "../Core/Geometry.utils";
-import PathFinder from "../algorithms/PathFinder.interface";
-import PathFinderGeneratorService from "../algorithms/PathFinderGenerator.service";
-import CharacterService from "../Character/Character.service";
-import Character from "../Character/Character";
-import ObstacleService from "../Obstacle/Obstacle.service";
+import { TravelSquare } from "../_Core/TravelSquare";
+import { isPointSame } from "../_Core/Geometry.utils";
 import { Obstacle } from "../Obstacle/Obstacle";
-import ObstacleCreateInput from "../Obstacle/ObstacleCreate.input";
 import { CharacterCreateInput } from "../Character/CharacterCreateInput.interface";
 import { GameCreateInput } from "./GameCreateInput.interface";
-import Item from "../Item/Item";
-import { ItemCreateInput } from "../Item/ItemCreateInput.interface";
-import ItemService from "../Item/Item.service";
+import { ObstacleService } from "../Obstacle";
+import { Item, ItemCreateInput, ItemService } from "../Item";
+import { Character, CharacterService } from "../Character";
+import { PathFinder, PathFinderGeneratorService } from "../_Shared/algorithms";
+import { ObstacleCreateInput } from "../Obstacle/ObstacleCreate.input";
 
 export class GameService {
   squares: Point[] = [];

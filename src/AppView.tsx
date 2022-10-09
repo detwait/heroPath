@@ -1,5 +1,5 @@
 import './AppView.css';
-import GameView from './Game/GameView';
+import { GameView } from './Game/GameView';
 
 export default function AppView() {
   return (
