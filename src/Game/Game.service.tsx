@@ -71,11 +71,13 @@ export class GameService {
     const obstacles: Obstacle[] = [];
     const amount = Math.floor(Math.pow(xSquaresAmount, 2) / 30);
 
+    const obstacleSkins: string[] = [Config.skins.rock, Config.skins.bush];
+
     for (let i = 0; i < amount; i++) {
       const newObstacleInput: ObstacleCreateInput = {
         x: Math.floor(Math.random() * (xSquaresAmount - 1)) + 1,
         y: Math.floor(Math.random() * (ySquaresAmount - 1)) + 1,
-        skin: Config.skins.rock,
+        skin: obstacleSkins[Math.floor(Math.random() * obstacleSkins.length)],
       };
 
       const newObstacle: Obstacle = this.obstacleService.create(newObstacleInput);

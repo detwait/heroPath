@@ -18,6 +18,7 @@ export const Config: ConfigType = {
   skins: {
     ninja: "ninja.png",
     rock: "rock.png",
+    bush: "bush.png",
     troll: "troll.png",
     golem: "golem.png",
     dragon: "dragon.png",
