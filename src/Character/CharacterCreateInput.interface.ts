@@ -1,3 +1,5 @@
+import { ItemCreateInput } from "../Item";
+
 export interface CharacterCreateInput {
 	isPlayer: boolean;
 	id: string;
@@ -10,4 +12,5 @@ export interface CharacterCreateInput {
 	agility: number;
 	x: number;
 	y: number;
+	items: ItemCreateInput[];
 }

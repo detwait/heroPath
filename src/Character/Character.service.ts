@@ -1,10 +1,19 @@
 import { Config } from '../Config';
+import { Item } from '../Item';
 import { Character } from './Character';
 import { CharacterCreateInput } from "./CharacterCreateInput.interface";
 
 export class CharacterService {
 	calculateMaxHp(character: Character): number {
 		return character.nativeHp + character.level * 10;
+	}
+	
+	getStrength(character: Character): number {
+		return character.strength + character.items.reduce((acc, item: Item) => acc + item.strength, 0);
+	}
+
+	getAgility(character: Character): number {
+		return character.agility + character.items.reduce((acc, item: Item) => acc + item.agility, 0);
 	}
 
 	create(input: CharacterCreateInput): Character {

@@ -3,6 +3,7 @@ import { Point } from "../_Core/Point";
 import { TravelSquare } from "../_Core/TravelSquare";
 import { TravelState } from "../Game/TravelState.enum";
 import { CharacterCreateInput } from "./CharacterCreateInput.interface";
+import { Item } from "../Item";
 
 export class Character implements IdEntity, Point {
   isPlayer: boolean = false;
@@ -24,6 +25,7 @@ export class Character implements IdEntity, Point {
   travelStartTime: number = 0;
   travelFinishTime: number = 0;
   destination: Point;
+  items: Item[];
 
   constructor({
     isPlayer,
@@ -37,6 +39,7 @@ export class Character implements IdEntity, Point {
     agility,
     x,
     y,
+    items,
   }: CharacterCreateInput) {
     this.isPlayer = isPlayer || false;
     this.id = id;
@@ -50,5 +53,6 @@ export class Character implements IdEntity, Point {
     this.x = x;
     this.y = y;
     this.destination = { x, y };
+    this.items = [...items];
   }
 }

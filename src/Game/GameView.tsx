@@ -24,8 +24,6 @@ export function GameView() {
   const [characters, setCharacters] = useState<Character[]>(gameService.characters);
   const [items, setItems] = useState<Item[]>(gameService.items);
   const player: Character = gameService.getPlayer(characters);
-  const playerItems: Item[] = gameService.getCharacterItems(player, items);
-  const groundItems: Item[] = gameService.getGroundItems(items);
 
   useEffect(() => {
     const timer = setInterval(() => { travel(); }, Config.appIntervalFrequencyMiliseconds);
@@ -53,10 +51,11 @@ export function GameView() {
 
     if (itemFound) {
       Object.assign(itemFound, {
-        ...(gameService.characterClaimItem(player, itemFound))
+        ...(gameService.characterClaimItem(player, itemFound, items))
       });
 
       setItems([ ...items ]);
+      setCharacters([ ...characters ]);
     }
 
     if(isPointSame(player.destination, {x, y})) {
@@ -77,8 +76,7 @@ export function GameView() {
       <main>
         <GamePlayerInfoView
           player={player}
-          playerItems={playerItems}>
-        </GamePlayerInfoView>
+        ></GamePlayerInfoView>
         <div className="Board" style={styles}>
           { gameService.squares.map(entity => <SquareView 
             key={'square_' + entity.x + '_' + entity.y}
@@ -90,7 +88,7 @@ export function GameView() {
             key={entity.id}
             entity={entity}
           />) }
-          { groundItems.map(entity => <ItemView 
+          { items.map(entity => <ItemView 
             key={entity.id}
             entity={entity}
             onClick={ () => startTravel(entity)} 

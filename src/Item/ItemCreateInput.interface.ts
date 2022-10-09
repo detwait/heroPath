@@ -6,7 +6,6 @@ export interface ItemCreateInput {
 	avatar: string,
 	strength: number,
 	agility: number,
-	ownerId: string;
 	x: number,
 	y: number,
 }

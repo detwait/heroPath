@@ -4,7 +4,6 @@ import { ItemCreateInput } from "./ItemCreateInput.interface";
 
 export class Item implements IdEntity, Point {
   id: string;
-  ownerId: string = '';
   name: string = "default";
   description: string;
   skin: string;
@@ -24,10 +23,8 @@ export class Item implements IdEntity, Point {
     agility,
     x,
     y,
-    ownerId,
   }: ItemCreateInput) {
     this.id = id;
-    this.ownerId = ownerId;
     this.name = name;
     this.description = description;
     this.skin = skin;

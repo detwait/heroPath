@@ -59,14 +59,6 @@ export class GameService {
     return player;
   }
 
-  getCharacterItems(character: Character, items: Item[]): Item[] {
-    return items.filter(({ ownerId }: Item) => character.id && character.id === ownerId);
-  }
-
-  getGroundItems(items: Item[]): Item[] {
-    return items.filter(({ ownerId }: Item) => !ownerId);
-  }
-
   generateObstacles(xSquaresAmount: number, ySquaresAmount: number): Obstacle[] {
     const obstacles: Obstacle[] = [];
     const amount = Math.floor(Math.pow(xSquaresAmount, 2) / 30);
@@ -134,10 +126,13 @@ export class GameService {
     return this.items.find(({ x, y }: Item) => characterLocation.x === x && characterLocation.y === y);
   }
 
-  characterClaimItem(character: Character, item: Item): Item {
-    Object.assign(item, {
-      ownerId: character.id,
-    });
+  characterClaimItem(character: Character, item: Item, items: Item[]): Item {
+    character.items.push(item);
+
+    const index: number = items.indexOf(item);
+    if(index !== -1) {
+      items.splice(index, 1);
+    }
 
     return item;
   }
