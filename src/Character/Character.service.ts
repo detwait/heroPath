@@ -1,6 +1,6 @@
 import Character from "./Character";
-import CharacterCreateInput from "./CharacterCreate.input";
 import { Config } from '../Config';
+import { CharacterCreateInput } from "./CharacterCreateInput.interface";
 
 export default class CharacterService {
 	calculateMaxHp(character: Character): number {

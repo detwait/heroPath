@@ -9,8 +9,9 @@ import { isPointSame } from '../Core/Geometry.utils';
 import Character from '../Character/Character';
 import CharacterView from '../Character/CharacterView';
 import ObstacleView from '../Obstacle/ObstacleView';
+import { Seed } from '../Seed';
 
-const gameService = new GameService();
+const gameService = new GameService({ ...Seed });
 
 export default function GameView() {
   const styles: React.CSSProperties = {
@@ -75,11 +76,11 @@ export default function GameView() {
             onClick={ () => startTravel(square)} 
           />) }
           { gameService.obstacles.map(obstacle => <ObstacleView 
-            key={'obstacle_' + obstacle.x + '_' + obstacle.y}
+            key={obstacle.id}
             obstacle={obstacle}
           />) }
           { characters.map(character => <CharacterView 
-            key={'character_' + character.name}
+            key={character.id}
             character={character}
           />) }
         </div>

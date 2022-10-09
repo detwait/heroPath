@@ -6,23 +6,30 @@ import { isPointSame } from "../Core/Geometry.utils";
 import PathFinder from "../algorithms/PathFinder.interface";
 import PathFinderGeneratorService from "../algorithms/PathFinderGenerator.service";
 import CharacterService from "../Character/Character.service";
-import CharacterCreateInput from "../Character/CharacterCreate.input";
 import Character from "../Character/Character";
 import ObstacleService from "../Obstacle/Obstacle.service";
 import { Obstacle } from "../Obstacle/Obstacle";
 import ObstacleCreateInput from "../Obstacle/ObstacleCreate.input";
+import { CharacterCreateInput } from "../Character/CharacterCreateInput.interface";
+import { GameCreateInput } from "./GameCreateInput.interface";
+import Item from "../Item/Item";
+import { ItemCreateInput } from "../Item/ItemCreateInput.interface";
+import ItemService from "../Item/Item.service";
 
 export class GameService {
   squares: Point[] = [];
   obstacles: Obstacle[] = [];
   characters: Character[] = [];
+  items: Item[] = [];
   characterService: CharacterService = new CharacterService();
+  itemService: ItemService = new ItemService();
   obstacleService: ObstacleService = new ObstacleService();
   pathFinderService: PathFinder = new PathFinderGeneratorService().getPathFinderService(Config.pathFinderAlgorithm);
 
-  constructor() {
+  constructor({ characters, items }: GameCreateInput) {
     this.squares = this.generateSquares(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount);
-    this.characters = this.addCharacters();
+    this.characters = this.addCharacters(characters);
+    this.items = this.addItems(items);
     this.obstacles = this.generateObstacles(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount);
   }
 
@@ -38,8 +45,12 @@ export class GameService {
     return squares;
   }
 
-  addCharacters(): Character[] {
-    return Config.characters.map((input: CharacterCreateInput) => this.characterService.create(input))
+  addCharacters(characters: CharacterCreateInput[]): Character[] {
+    return characters.map((input: CharacterCreateInput) => this.characterService.create(input))
+  }
+
+  addItems(items: ItemCreateInput[]): Item[] {
+    return items.map((input: ItemCreateInput) => this.itemService.create(input))
   }
 
   getPlayer(characters: Character[]): Character {
