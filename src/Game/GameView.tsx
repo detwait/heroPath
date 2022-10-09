@@ -9,7 +9,9 @@ import { Seed } from '../Seed';
 import { SquareView } from '../Square';
 import { ObstacleView } from '../Obstacle';
 import { Character, CharacterView } from '../Character';
+import { ImageService, ImageType } from '../_Shared/image';
 
+const imageService: ImageService = new ImageService();
 const gameService = new GameService({ ...Seed });
 
 export function GameView() {
@@ -60,7 +62,9 @@ export function GameView() {
       </header>
       <main>
         <div className="Player">
-          <p><img src={`${process.env.PUBLIC_URL}/images/avatars/${player.avatar}`} alt="avatar" /></p>
+          <p>
+            <img src={`${imageService.getPath(ImageType.avatar, player.avatar)}`} alt="avatar" />
+          </p>
           <p>Name: {player.name}</p>
           <p>Level: {player.level}</p>
           <p>Strength: {player.strength}</p>

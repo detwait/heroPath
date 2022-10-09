@@ -1,6 +1,9 @@
 import './ObstacleView.css';
 import { Config } from '../Config';
 import { ObstacleViewProps } from './ObstacleView.props';
+import { ImageService, ImageType } from '../_Shared/image';
+
+const imageService: ImageService = new ImageService();
 
 export function ObstacleView({obstacle}: ObstacleViewProps) {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
@@ -10,7 +13,7 @@ export function ObstacleView({obstacle}: ObstacleViewProps) {
     height: `${sideLength}px`,
     top:  (obstacle.y - 1) * sideLength + 'px',
     left: (obstacle.x - 1) * sideLength + 'px',
-    background: `url('${process.env.PUBLIC_URL}/images/skins/${obstacle.skin}')`,
+    background: `url('${imageService.getPath(ImageType.skin, obstacle.skin)}')`,
   };
 
   return (
