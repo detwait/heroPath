@@ -1,7 +1,8 @@
 import { IdEntity } from "../_Core/IdEntity.interface";
+import { Point } from "../_Core/Point";
 import { ItemCreateInput } from "./ItemCreateInput.interface";
 
-export class Item implements IdEntity {
+export class Item implements IdEntity, Point {
   id: string;
   ownerId: string = '';
   name: string = "default";
@@ -10,8 +11,8 @@ export class Item implements IdEntity {
 	avatar: string;
   strength: number = 0;
   agility: number = 0;
-  x?: number;
-  y?: number;
+  x: number;
+  y: number;
 
   constructor({
     id,

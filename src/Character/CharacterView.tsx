@@ -5,18 +5,22 @@ import { ImageService, ImageType } from '../_Shared/image';
 
 const imageService: ImageService = new ImageService();
 
-export function CharacterView({character}: CharacterViewProps): JSX.Element {
+export function CharacterView({ entity, onClick }: CharacterViewProps): JSX.Element {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles = {
     width: `${sideLength}px`,
     height: `${sideLength}px`,
-    top:  (character.y - 1) * sideLength + 'px',
-    left: (character.x - 1) * sideLength + 'px',
-    background: `url('${imageService.getPath(ImageType.skin, character.skin)}')`,
+    top:  (entity.y - 1) * sideLength + 'px',
+    left: (entity.x - 1) * sideLength + 'px',
+    background: `url('${imageService.getPath(ImageType.skin, entity.skin)}')`,
   };
 
   return (
-    <div className="Character" style={styles}></div>
+    <div
+      className="Character"
+      style={styles}
+      onClick={() => onClick(entity)} 
+    ></div>
   );
 }

@@ -5,15 +5,15 @@ import { ImageService, ImageType } from '../_Shared/image';
 
 const imageService: ImageService = new ImageService();
 
-export function ObstacleView({obstacle}: ObstacleViewProps) {
+export function ObstacleView({ entity }: ObstacleViewProps) {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles: any = {
     width: `${sideLength}px`,
     height: `${sideLength}px`,
-    top:  (obstacle.y - 1) * sideLength + 'px',
-    left: (obstacle.x - 1) * sideLength + 'px',
-    background: `url('${imageService.getPath(ImageType.skin, obstacle.skin)}')`,
+    top:  (entity.y - 1) * sideLength + 'px',
+    left: (entity.x - 1) * sideLength + 'px',
+    background: `url('${imageService.getPath(ImageType.skin, entity.skin)}')`,
   };
 
   return (

@@ -2,7 +2,7 @@ import './SquareView.css';
 import { Config } from '../Config';
 import { SquareViewProps } from './SquareView.props';
 
-export function SquareView({square, onClick}: SquareViewProps) {
+export function SquareView({entity, onClick}: SquareViewProps) {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles: any = {
@@ -10,14 +10,11 @@ export function SquareView({square, onClick}: SquareViewProps) {
     height: `${sideLength}px`,
   };
 
-  // const squareColorClassName = isObstacle ? '' : (square.x + square.y) % 2 === 0 ? 'SquareWhite' : 'SquareGray';
-  const classNames = `Square`;
-
   return (
     <div 
-      className={classNames}
+      className={`Square`}
       style={styles}
-      onClick={() => onClick(square)} 
+      onClick={() => onClick(entity)} 
     />
   );
 }

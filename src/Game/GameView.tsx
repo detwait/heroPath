@@ -80,23 +80,25 @@ export function GameView() {
           playerItems={playerItems}>
         </GamePlayerInfoView>
         <div className="Board" style={styles}>
-          { gameService.squares.map(square => <SquareView 
-            key={'square_' + square.x + '_' + square.y}
-            square={square}
-            isObstacle={gameService.isObstacle(square)}
-            onClick={ () => startTravel(square)} 
+          { gameService.squares.map(entity => <SquareView 
+            key={'square_' + entity.x + '_' + entity.y}
+            entity={entity}
+            isObstacle={gameService.isObstacle(entity)}
+            onClick={ () => startTravel(entity)} 
           />) }
-          { gameService.obstacles.map(obstacle => <ObstacleView 
-            key={obstacle.id}
-            obstacle={obstacle}
+          { gameService.obstacles.map(entity => <ObstacleView 
+            key={entity.id}
+            entity={entity}
           />) }
-          { groundItems.map(item => <ItemView 
-            key={item.id}
-            item={item}
+          { groundItems.map(entity => <ItemView 
+            key={entity.id}
+            entity={entity}
+            onClick={ () => startTravel(entity)} 
           />) }
-          { characters.map(character => <CharacterView 
-            key={character.id}
-            character={character}
+          { characters.map(entity => <CharacterView 
+            key={entity.id}
+            entity={entity}
+            onClick={ () => startTravel(entity)} 
           />) }
         </div>
       </main>

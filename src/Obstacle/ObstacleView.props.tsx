@@ -1,6 +1,6 @@
 import { Obstacle } from "./Obstacle";
 
 export type ObstacleViewProps = {
-  obstacle: Obstacle;
+  entity: Obstacle;
   children?: React.ReactNode;
 }

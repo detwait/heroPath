@@ -7,6 +7,6 @@ export interface ItemCreateInput {
 	strength: number,
 	agility: number,
 	ownerId: string;
-	x?: number,
-	y?: number,
+	x: number,
+	y: number,
 }

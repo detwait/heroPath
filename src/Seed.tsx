@@ -39,6 +39,8 @@ export const Seed: SeedType = {
       avatar: avatars.ringStrength,
       strength: 1,
       agility: 0,
+      x: 0,
+      y: 0, 
       ownerId: 'ninja'
     },
   ],

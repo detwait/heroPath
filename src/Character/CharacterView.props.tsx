@@ -1,6 +1,7 @@
 import { Character } from "./Character";
 
 export type CharacterViewProps = {
-  character: Character;
+  entity: Character;
+  onClick: (args: any) => void;
   children?: React.ReactNode;
 }
