@@ -12,8 +12,6 @@ import { Character, CharacterView } from '../Character';
 import { ImageService, ImageType } from '../_Shared/image';
 import { Item, ItemView } from '../Item';
 
-console.log(Seed);
-
 const imageService: ImageService = new ImageService();
 const gameService = new GameService({ ...Seed });
 
