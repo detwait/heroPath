@@ -43,6 +43,7 @@ export const Seed: SeedType = {
       id: 'troll',
       name: 'Troll',
       skin: skins.troll,
+      avatar: avatars.troll,
       level: 1,
       strength: 1,
       agility: 2,

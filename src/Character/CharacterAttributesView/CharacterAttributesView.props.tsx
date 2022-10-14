@@ -1,6 +1,6 @@
 import { Character } from "../Character";
 
-export type GamePlayerInfoViewProps = {
-  player: Character;
+export type CharacterAttributesViewProps = {
+  character: Character;
   children?: React.ReactNode;
 }

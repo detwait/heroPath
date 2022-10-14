@@ -35,4 +35,16 @@ export class CharacterService {
 			this.levelUp(character);
 		}
 	}
+
+	decreaseHp(character: Character, hpDown: number): void {
+		character.hp = hpDown > character.hp ? 0 : character.hp - hpDown;
+	}
+
+	increaseHp(character: Character, hpUp: number): void {
+		character.hp = character.hp + hpUp > character.maxHp ? character.maxHp : character.hp + hpUp;
+	}
+
+	isDead(character: Character): boolean {
+		return character.hp <= 0;
+	}
 }

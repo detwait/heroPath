@@ -27,6 +27,7 @@ export const Config: ConfigType = {
   },
   avatars: {
     ninja: "ninja.png",
+    troll: "troll.png",
     ringStrength: "ring_strength.png",
     ringAgility: "ring_agility.png",
   },

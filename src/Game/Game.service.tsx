@@ -12,15 +12,16 @@ import { Character, CharacterService } from "../Character";
 import { PathFinder, PathFinderGeneratorService } from "../_Shared/algorithms";
 import { ObstacleCreateInput } from "../Obstacle/ObstacleCreate.input";
 
+const characterService: CharacterService = new CharacterService();
+const itemService: ItemService = new ItemService();
+const obstacleService: ObstacleService = new ObstacleService();
+const pathFinderService: PathFinder = new PathFinderGeneratorService().getPathFinderService(Config.pathFinderAlgorithm);
+
 export class GameService {
   squares: Point[] = [];
   obstacles: Obstacle[] = [];
   characters: Character[] = [];
   items: Item[] = [];
-  characterService: CharacterService = new CharacterService();
-  itemService: ItemService = new ItemService();
-  obstacleService: ObstacleService = new ObstacleService();
-  pathFinderService: PathFinder = new PathFinderGeneratorService().getPathFinderService(Config.pathFinderAlgorithm);
 
   constructor({ characters, items }: GameCreateInput) {
     this.squares = this.generateSquares(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount);
@@ -42,11 +43,11 @@ export class GameService {
   }
 
   addCharacters(characters: CharacterCreateInput[]): Character[] {
-    return characters.map((input: CharacterCreateInput) => this.characterService.create(input))
+    return characters.map((input: CharacterCreateInput) => characterService.create(input))
   }
 
   addItems(items: ItemCreateInput[]): Item[] {
-    return items.map((input: ItemCreateInput) => this.itemService.create(input))
+    return items.map((input: ItemCreateInput) => itemService.create(input))
   }
 
   getPlayer(characters: Character[]): Character {
@@ -72,7 +73,7 @@ export class GameService {
         skin: obstacleSkins[Math.floor(Math.random() * obstacleSkins.length)],
       };
 
-      const newObstacle: Obstacle = this.obstacleService.create(newObstacleInput);
+      const newObstacle: Obstacle = obstacleService.create(newObstacleInput);
 
       if (this.characters.every((character: Character) => !isPointSame(character, newObstacle)) 
       && obstacles.every((obstacle: Obstacle) => !isPointSame(obstacle, newObstacle))) {
@@ -89,7 +90,7 @@ export class GameService {
 
   startTravel(character: Character, destination: Point): Partial<Character> {
     if (destination.x && destination.y && !isPointSame(character, destination) && character.state === TravelState.stay) {
-      const travelPath: TravelSquare[] = this.pathFinderService.findPath({ start: character, end: destination, commonGrid: this.squares, obstacles: this.obstacles });
+      const travelPath: TravelSquare[] = pathFinderService.findPath({ start: character, end: destination, commonGrid: this.squares, obstacles: this.obstacles });
       
       if (travelPath && travelPath.length > 0) {
         const travelStartTime: number = new Date().getTime();

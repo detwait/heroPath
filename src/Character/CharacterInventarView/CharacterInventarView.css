@@ -1,0 +1,24 @@
+.CharacterInventar {
+  padding: 0;
+  margin: 0;
+  width: 300px;
+  height: 100%;
+  background-color: chocolate;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.CharacterInventarItem {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CharacterInventarItem img {
+  width: 80px;
+  height: 80px;
+}
