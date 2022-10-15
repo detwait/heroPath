@@ -26,7 +26,7 @@ export class BattleService {
   }
 
   proccessCharacter(battle: Battle, attacker: Character, defender: Character): void {
-    if (characterService.isDead(attacker)) {
+    if (characterService.isDead(attacker) || characterService.isDead(defender)) {
       return;
     }
 
@@ -34,14 +34,24 @@ export class BattleService {
 
     if (isHit) {
       characterService.decreaseHp(defender, damage);
-      battleLogService.hitLog(battle.log, attacker, defender, damage);
+      battleLogService.hit(battle.log, attacker, defender, damage);
 
       if (characterService.isDead(defender)) {
-        battleLogService.deathLog(battle.log, defender);
-        battleLogService.winLog(battle.log, attacker);
+        battleLogService.death(battle.log, defender);
+        battleLogService.win(battle.log, attacker);
+
+        const attackerOldLevel: number = characterService.getLevel(attacker);
+        const battleExp: number = characterService.calculateExpFrom(defender);
+        characterService.addExp(attacker, battleExp);
+        const attackerNewLevel: number = characterService.getLevel(attacker);
+        battleLogService.getExp(battle.log, attacker, battleExp);
+
+        if (attackerNewLevel > attackerOldLevel) {
+          battleLogService.getLevel(battle.log, attacker, attackerNewLevel);
+        }
       }
     } else {
-      battleLogService.missLog(battle.log, attacker);
+      battleLogService.miss(battle.log, attacker);
     }
   }
   

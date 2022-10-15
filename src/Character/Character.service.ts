@@ -16,6 +16,10 @@ export class CharacterService {
 		return character.agility + character.items.reduce((acc, item: Item) => acc + item.agility, 0);
 	}
 
+	getLevel(character: Character): number {
+		return character.level;
+	}
+
 	create(input: CharacterCreateInput): Character {
 		const character: Character = new Character(input);
 		character.maxHp = this.calculateMaxHp(character);
@@ -31,9 +35,17 @@ export class CharacterService {
 
 	addExp(character: Character, exp: number): void {
 		character.exp += exp;
+
+		console.log(`char exp ${character.exp}`);
+		console.log(`Config.levelExpMap[character.level + 1] ${Config.levelExpMap[character.level + 1]}`);
+
 		if (Config.levelExpMap[character.level + 1] && Config.levelExpMap[character.level + 1] <= character.exp) {
 			this.levelUp(character);
 		}
+	}
+
+	calculateExpFrom(character: Character): number {
+		return character.level * 500;
 	}
 
 	decreaseHp(character: Character, hpDown: number): void {
@@ -42,6 +54,10 @@ export class CharacterService {
 
 	increaseHp(character: Character, hpUp: number): void {
 		character.hp = character.hp + hpUp > character.maxHp ? character.maxHp : character.hp + hpUp;
+	}
+
+	restoreHp(character: Character): void {
+		character.hp = character.maxHp;
 	}
 
 	isDead(character: Character): boolean {

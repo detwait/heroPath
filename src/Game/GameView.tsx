@@ -8,13 +8,14 @@ import { isPointSame } from '../_Core/Geometry.utils';
 import { Seed } from '../Seed';
 import { SquareView } from '../Square';
 import { ObstacleView } from '../Obstacle';
-import { Character, CharacterView } from '../Character';
+import { Character, CharacterService, CharacterView } from '../Character';
 import { Item, ItemView } from '../Item';
 import { Battle, BattleService, BattleView } from '../Battle';
 import { PlayerInfoView } from './PlayerInfoView/PlayerInfoView';
 
-const gameService = new GameService({ ...Seed });
-const battleService = new BattleService();
+const gameService: GameService = new GameService({ ...Seed });
+const battleService: BattleService = new BattleService();
+const characterService: CharacterService = new CharacterService();
 let gameBattle: Battle;
 
 export function GameView() {
@@ -29,17 +30,19 @@ export function GameView() {
   const player: Character = gameService.getPlayer(characters);
 
   useEffect(() => {
-    if (!battle) {
-      setTimeout(() => { startBattle(characters[1]); }, 3000);
-    }
+    // if (!battle) {
+    //   setTimeout(() => { startBattle(characters[1]); }, 3000);
+    // }
 
     const timer = setInterval(() => { travel(); }, Config.appIntervalFrequencyMiliseconds);
     return () => { timer && clearInterval(timer); };
   });
 
   function startBattle(opponent: Character): void {
-    gameBattle = new Battle(player, opponent);  
-    setBattle(gameBattle);
+    if (!gameBattle?.player) {
+      gameBattle = new Battle(player, opponent);  
+      setBattle(gameBattle);
+    }
   }
 
   function proccessBattle(battle: Battle): void {
@@ -47,8 +50,9 @@ export function GameView() {
     setBattle({ ...battle });
   }
 
-  function closeBattle(battle: Battle): void {
-    setBattle({} as Battle);
+  function closeBattle(): void {
+    gameBattle = {} as Battle;
+    setBattle(gameBattle);
   }
 
   function startTravel(destination: Point): void {
@@ -68,7 +72,8 @@ export function GameView() {
       return;
     }
     
-    const itemFound: Item | undefined = gameService.isCharacterOnItem({x, y});
+    const itemFound: Item | undefined = gameService.isPlayerOnItem({x, y});
+    const enemyFound: Character | undefined = gameService.isPlayerOnEnemy(player);
 
     if (itemFound) {
       Object.assign(itemFound, {
@@ -77,6 +82,10 @@ export function GameView() {
 
       setItems([ ...items ]);
       setCharacters([ ...characters ]);
+    }
+
+    if (enemyFound) {
+      startBattle(enemyFound);
     }
 
     if(isPointSame(player.destination, {x, y})) {
@@ -95,7 +104,7 @@ export function GameView() {
         <h1>Hero Path</h1>
       </header>
         { battle?.player 
-          ? <BattleView battle={battle} onAttack={() => proccessBattle(battle)} onClose={() => closeBattle(battle)} ></BattleView>
+          ? <BattleView battle={battle} onAttack={() => proccessBattle(battle)} onClose={() => closeBattle()} ></BattleView>
           : <main>
             <PlayerInfoView
             player={player}
@@ -116,7 +125,7 @@ export function GameView() {
                 entity={entity}
                 onClick={ () => startTravel(entity)} 
               />) }
-              { characters.map(entity => <CharacterView 
+              { characters.filter((entity: Character) => !characterService.isDead(entity)).map(entity => <CharacterView 
                 key={entity.id}
                 entity={entity}
                 onClick={ () => startTravel(entity)} 

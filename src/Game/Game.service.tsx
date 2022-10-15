@@ -123,8 +123,12 @@ export class GameService {
     };
   }
 
-  isCharacterOnItem(characterLocation: Point): Item | undefined {
-    return this.items.find(({ x, y }: Item) => characterLocation.x === x && characterLocation.y === y);
+  isPlayerOnEnemy(player: Character): Character | undefined {
+    return this.characters
+    .find((character: Character) => player.x === character.x 
+      && player.y === character.y
+      && !characterService.isDead(character)
+      && player.id !== character.id );
   }
 
   characterClaimItem(character: Character, item: Item, items: Item[]): Item {
@@ -136,6 +140,10 @@ export class GameService {
     }
 
     return item;
+  }
+
+  isPlayerOnItem(characterLocation: Point): Item | undefined {
+    return this.items.find(({ x, y }: Item) => characterLocation.x === x && characterLocation.y === y);
   }
 
   travel(character: Character): Partial<Character> {

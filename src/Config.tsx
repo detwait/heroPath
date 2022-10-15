@@ -28,17 +28,20 @@ export const Config: ConfigType = {
   avatars: {
     ninja: "ninja.png",
     troll: "troll.png",
+    golem: "golem.png",
+    dragon: "dragon.png",
     ringStrength: "ring_strength.png",
     ringAgility: "ring_agility.png",
   },
 
   levelExpMap: {
-		0: 500,
-		1: 1000,
-		2: 2000,
-		3: 5000,
-		4: 10000,
-		5: 15000,
-		6: 15000,
+    2: 500,
+		3: 1000,
+		4: 2000,
+		5: 5000,
+		6: 10000,
+		7: 15000,
+		8: 20000,
+		9: 25000,
 	},
 }
