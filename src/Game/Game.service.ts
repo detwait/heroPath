@@ -5,7 +5,6 @@ import { TravelSquare } from "../_Core/TravelSquare";
 import { isPointSame } from "../_Core/Geometry.utils";
 import { Obstacle } from "../Obstacle/Obstacle";
 import { CharacterCreateInput } from "../Character/CharacterCreateInput.interface";
-import { GameCreateInput } from "./GameCreateInput.interface";
 import { ObstacleService } from "../Obstacle";
 import { Item, ItemCreateInput, ItemService } from "../Item";
 import { Character, CharacterService } from "../Character";
@@ -20,19 +19,8 @@ const obstacleService: ObstacleService = new ObstacleService();
 const pathFinderService: PathFinder = new PathFinderGeneratorService().getPathFinderService(Config.pathFinderAlgorithm);
 
 export class GameService {
-  squares: Point[] = [];
-  obstacles: Obstacle[] = [];
-  characters: Character[] = [];
-  items: Item[] = [];
-  audio: HTMLAudioElement;
-
-  constructor({ characters, items }: GameCreateInput) {
-    this.audio = audioService.create(Config.audios.location);
-
-    this.squares = this.generateSquares(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount);
-    this.characters = this.addCharacters(characters);
-    this.items = this.addItems(items);
-    this.obstacles = this.generateObstacles(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount);
+  createAudio(): HTMLAudioElement {
+    return audioService.create(Config.audios.location);
   }
 
   generateSquares(xAmount: number, yAmount: number): Point[] {
@@ -65,7 +53,7 @@ export class GameService {
     return player;
   }
 
-  generateObstacles(xSquaresAmount: number, ySquaresAmount: number): Obstacle[] {
+  generateObstacles(xSquaresAmount: number, ySquaresAmount: number, characters: Character[], items: Item[]): Obstacle[] {
     const obstacles: Obstacle[] = [];
     const amount = Math.floor(Math.pow(xSquaresAmount, 2) / 30);
 
@@ -80,8 +68,8 @@ export class GameService {
 
       const newObstacle: Obstacle = obstacleService.create(newObstacleInput);
 
-      if (this.characters.every((character: Character) => !isPointSame(character, newObstacle)) 
-        && this.items.every((item: Item) => !isPointSame(item, newObstacle))
+      if (characters.every((character: Character) => !isPointSame(character, newObstacle)) 
+        && items.every((item: Item) => !isPointSame(item, newObstacle))
         && obstacles.every((obstacle: Obstacle) => !isPointSame(obstacle, newObstacle))) {
           obstacles.push(newObstacle);
       }
@@ -90,13 +78,13 @@ export class GameService {
     return obstacles;
   }
 
-  isObstacle(point: Point): boolean {
-    return this.obstacles.some(i => isPointSame(i, point));
+  isObstacle(point: Point, obstacles: Obstacle[]): boolean {
+    return obstacles.some(i => isPointSame(i, point));
   }
 
-  startTravel(character: Character, destination: Point): Partial<Character> {
+  startTravel(character: Character, destination: Point, squares: Point[], obstacles: Obstacle[]): Partial<Character> {
     if (destination.x && destination.y && !isPointSame(character, destination) && character.state === TravelState.stay) {
-      const travelPath: TravelSquare[] = pathFinderService.findPath({ start: character, end: destination, commonGrid: this.squares, obstacles: this.obstacles });
+      const travelPath: TravelSquare[] = pathFinderService.findPath({ start: character, end: destination, commonGrid: squares, obstacles });
       
       if (travelPath && travelPath.length > 0) {
         const travelStartTime: number = new Date().getTime();
@@ -129,8 +117,8 @@ export class GameService {
     };
   }
 
-  isPlayerOnEnemy(player: Character): Character | undefined {
-    return this.characters
+  isPlayerOnEnemy(player: Character, characters: Character[]): Character | undefined {
+    return characters
     .find((character: Character) => player.x === character.x 
       && player.y === character.y
       && !characterService.isDead(character)
@@ -148,8 +136,8 @@ export class GameService {
     return item;
   }
 
-  isPlayerOnItem(characterLocation: Point): Item | undefined {
-    return this.items.find(({ x, y }: Item) => characterLocation.x === x && characterLocation.y === y);
+  isPlayerOnItem(characterLocation: Point, items: Item[]): Item | undefined {
+    return items.find(({ x, y }: Item) => characterLocation.x === x && characterLocation.y === y);
   }
 
   travel(character: Character): Partial<Character> {

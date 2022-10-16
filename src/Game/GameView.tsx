@@ -6,28 +6,26 @@ import { GameService } from './Game.service';
 import { Point } from '../_Core/Point';
 import { isPointSame } from '../_Core/Geometry.utils';
 import { Seed } from '../Seed';
-import { SquareView } from '../Square';
-import { ObstacleView } from '../Obstacle';
-import { Character, CharacterService, CharacterView } from '../Character';
-import { Item, ItemView } from '../Item';
+import { Character } from '../Character';
+import { Item } from '../Item';
 import { Battle, BattleService, BattleView } from '../Battle';
 import { PlayerInfoView } from './PlayerInfoView/PlayerInfoView';
+import { GameLocationView } from './GameLocation/GameLocationView';
+import { Game } from './Game';
+import { Obstacle } from '../Obstacle/Obstacle';
 
-const gameService: GameService = new GameService({ ...Seed });
+const gameService: GameService = new GameService();
 const battleService: BattleService = new BattleService();
-const characterService: CharacterService = new CharacterService();
+const game: Game = new Game({ ...Seed });
 let gameBattle: Battle;
 
 export function GameView() {
-  const styles: React.CSSProperties = {
-    width: `${Config.boardSideLength}px`,
-    height: `${Config.boardSideLength}px`,
-  };
-
-  const [characters, setCharacters] = useState<Character[]>(gameService.characters);
-  const [items, setItems] = useState<Item[]>(gameService.items);
+  const [characters, setCharacters] = useState<Character[]>(game.characters);
+  const [items, setItems] = useState<Item[]>(game.items);
   const [battle, setBattle] = useState<Battle>(gameBattle);
-  const [audio] = useState<HTMLAudioElement>(gameService.audio);
+  const [audio] = useState<HTMLAudioElement>(game.audio);
+  const [squares] = useState<Point[]>(game.squares);
+  const [obstacles] = useState<Obstacle[]>(game.obstacles);
   const player: Character = gameService.getPlayer(characters);
 
   useEffect(() => {
@@ -53,7 +51,7 @@ export function GameView() {
   }
 
   function startTravel(destination: Point): void {
-    Object.assign(player, gameService.startTravel(player, destination));
+    Object.assign(player, gameService.startTravel(player, destination, squares, obstacles));
     setCharacters([...characters]);
   }
 
@@ -69,8 +67,8 @@ export function GameView() {
       return;
     }
     
-    const itemFound: Item | undefined = gameService.isPlayerOnItem({x, y});
-    const enemyFound: Character | undefined = gameService.isPlayerOnEnemy(player);
+    const itemFound: Item | undefined = gameService.isPlayerOnItem({x, y}, items);
+    const enemyFound: Character | undefined = gameService.isPlayerOnEnemy(player, characters);
 
     if (itemFound) {
       Object.assign(itemFound, {
@@ -103,31 +101,14 @@ export function GameView() {
         { battle?.player 
           ? <BattleView battle={battle} onAttack={() => proccessBattle(battle)} onClose={() => closeBattle()} ></BattleView>
           : <main>
-            <PlayerInfoView
-            player={player}
-          ></PlayerInfoView>
-            <div className="Board" style={styles}>
-              { gameService.squares.map(entity => <SquareView 
-                key={'square_' + entity.x + '_' + entity.y}
-                entity={entity}
-                isObstacle={gameService.isObstacle(entity)}
-                onClick={ () => startTravel(entity)} 
-              />) }
-              { gameService.obstacles.map(entity => <ObstacleView 
-                key={entity.id}
-                entity={entity}
-              />) }
-              { items.map(entity => <ItemView 
-                key={entity.id}
-                entity={entity}
-                onClick={ () => startTravel(entity)} 
-              />) }
-              { characters.filter((entity: Character) => !characterService.isDead(entity)).map(entity => <CharacterView 
-                key={entity.id}
-                entity={entity}
-                onClick={ () => startTravel(entity)} 
-              />) }
-            </div>
+            <PlayerInfoView player={player}></PlayerInfoView>
+            <GameLocationView
+              characters={characters}
+              items={items}
+              obstacles={obstacles}
+              squares={squares}
+              startTravel={startTravel} >
+            </GameLocationView>
           </main> 
         }
       <footer>

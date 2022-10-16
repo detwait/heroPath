@@ -14,13 +14,6 @@ main {
   height: 800px;
 }
 
-.Board {
-  position: relative;
-  float: left;
-  background-color:bisque;
-  align-self: center;
-}
-
 footer {
   height: 30px;
 }
