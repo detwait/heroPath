@@ -1,6 +1,7 @@
 import { IdEntity } from "../_Core/IdEntity.interface";
 import { Point } from "../_Core/Point";
 import { ItemCreateInput } from "./ItemCreateInput.interface";
+import { ItemInfoInput } from "./ItemInfo.interface";
 
 export class Item implements IdEntity, Point {
   id: string;
@@ -14,17 +15,12 @@ export class Item implements IdEntity, Point {
   y: number;
 
   constructor({
-    id,
-    name,
-    description,
-    skin,
-		avatar,
-    strength,
-    agility,
+    itemId,
     x,
     y,
-  }: ItemCreateInput) {
-    this.id = id;
+  }: ItemCreateInput, itemsInfo: Record<string, ItemInfoInput>) {
+    const { name, description, skin, avatar, strength, agility } = itemsInfo[itemId];
+    this.id = itemId + Math.random() * 1000;
     this.name = name;
     this.description = description;
     this.skin = skin;

@@ -36,9 +36,6 @@ export class CharacterService {
 	addExp(character: Character, exp: number): void {
 		character.exp += exp;
 
-		console.log(`char exp ${character.exp}`);
-		console.log(`Config.levelExpMap[character.level + 1] ${Config.levelExpMap[character.level + 1]}`);
-
 		if (Config.levelExpMap[character.level + 1] && Config.levelExpMap[character.level + 1] <= character.exp) {
 			this.levelUp(character);
 		}

@@ -76,8 +76,9 @@ export class GameService {
       const newObstacle: Obstacle = obstacleService.create(newObstacleInput);
 
       if (this.characters.every((character: Character) => !isPointSame(character, newObstacle)) 
-      && obstacles.every((obstacle: Obstacle) => !isPointSame(obstacle, newObstacle))) {
-        obstacles.push(newObstacle);
+        && this.items.every((item: Item) => !isPointSame(item, newObstacle))
+        && obstacles.every((obstacle: Obstacle) => !isPointSame(obstacle, newObstacle))) {
+          obstacles.push(newObstacle);
       }
     }
 

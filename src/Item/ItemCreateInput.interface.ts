@@ -1,11 +1,5 @@
 export interface ItemCreateInput {
-	id: string,
-	name: string,
-	description: string;
-	skin: string,
-	avatar: string,
-	strength: number,
-	agility: number,
+	itemId: string,
 	x: number,
 	y: number,
 }
