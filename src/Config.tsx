@@ -10,6 +10,7 @@ type ConfigType = {
   skins: Record<string, string>,
   avatars: Record<string, string>,
   items: Record<string, ItemInfoInput>,
+  audios: Record<string, string>,
 };
 
 const skins: Record<string, string> = {
@@ -32,6 +33,11 @@ const avatars: Record<string, string> = {
   ringAgility: "ring_agility.png",
 };
 
+const audios: Record<string, string> = {
+  location: "location.mp3",
+  finalBattle: "finalbattle.mp3",
+};
+
 export const Config: ConfigType = {
   pathFinderAlgorithm: 'astar',
   boardSideLength: 800,
@@ -40,6 +46,7 @@ export const Config: ConfigType = {
   appIntervalFrequencyMiliseconds: 10,
   skins,
   avatars,
+  audios,
 
   items: {
     ringStrength: {

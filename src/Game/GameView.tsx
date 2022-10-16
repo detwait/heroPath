@@ -27,13 +27,10 @@ export function GameView() {
   const [characters, setCharacters] = useState<Character[]>(gameService.characters);
   const [items, setItems] = useState<Item[]>(gameService.items);
   const [battle, setBattle] = useState<Battle>(gameBattle);
+  const [audio] = useState<HTMLAudioElement>(gameService.audio);
   const player: Character = gameService.getPlayer(characters);
 
   useEffect(() => {
-    // if (!battle) {
-    //   setTimeout(() => { startBattle(characters[1]); }, 3000);
-    // }
-
     const timer = setInterval(() => { travel(); }, Config.appIntervalFrequencyMiliseconds);
     return () => { timer && clearInterval(timer); };
   });
@@ -99,7 +96,7 @@ export function GameView() {
   }
 
   return (
-    <div className='Game'>
+    <div className='Game' onClick={ () => audio.play() }>
       <header>
         <h1>Hero Path</h1>
       </header>

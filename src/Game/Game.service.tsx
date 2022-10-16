@@ -11,7 +11,9 @@ import { Item, ItemCreateInput, ItemService } from "../Item";
 import { Character, CharacterService } from "../Character";
 import { PathFinder, PathFinderGeneratorService } from "../_Shared/algorithms";
 import { ObstacleCreateInput } from "../Obstacle/ObstacleCreate.input";
+import { AudioService } from "../_Shared/audio";
 
+const audioService: AudioService = new AudioService();
 const characterService: CharacterService = new CharacterService();
 const itemService: ItemService = new ItemService();
 const obstacleService: ObstacleService = new ObstacleService();
@@ -22,8 +24,11 @@ export class GameService {
   obstacles: Obstacle[] = [];
   characters: Character[] = [];
   items: Item[] = [];
+  audio: HTMLAudioElement;
 
   constructor({ characters, items }: GameCreateInput) {
+    this.audio = audioService.create(Config.audios.location);
+
     this.squares = this.generateSquares(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount);
     this.characters = this.addCharacters(characters);
     this.items = this.addItems(items);
