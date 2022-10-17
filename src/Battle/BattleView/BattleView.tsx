@@ -31,7 +31,7 @@ export function BattleView({ battle, onAttack, onClose }: BattleViewProps) {
           } 
           if (battleService.isBattleWon(battle)) {
             return (
-              <button onClick={() => onClose(battle)}>
+              <button onClick={() => onClose()}>
                 <img src={`${imageService.getPath(ImageType.action, 'map.png')}`} alt="avatar" />
               </button>
             )

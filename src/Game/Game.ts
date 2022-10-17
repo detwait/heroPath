@@ -5,6 +5,8 @@ import { GameCreateInput } from "./GameCreateInput.interface";
 import { Item } from "../Item";
 import { Character } from "../Character";
 import { GameService } from "./Game.service";
+import { Battle } from "../Battle";
+import { GameStatus } from "./GameStatus.enum";
 
 const gameService: GameService = new GameService();
 
@@ -13,7 +15,9 @@ export class Game {
   obstacles: Obstacle[] = [];
   characters: Character[] = [];
   items: Item[] = [];
+  battle: Battle;
   audio: HTMLAudioElement;
+  status: GameStatus = GameStatus.preview;
 
   constructor({ characters, items }: GameCreateInput) {
     this.audio = gameService.createAudio();
@@ -21,5 +25,6 @@ export class Game {
     this.characters = gameService.addCharacters(characters);
     this.items = gameService.addItems(items);
     this.obstacles = gameService.generateObstacles(Config.boardSideSquaresAmount, Config.boardSideSquaresAmount, this.characters, this.items);
+    this.battle = { isActive: false } as Battle;
   }
 } 

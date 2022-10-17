@@ -60,4 +60,15 @@ export class CharacterService {
 	isDead(character: Character): boolean {
 		return character.hp <= 0;
 	}
+
+	claimItem(character: Character, item: Item, items: Item[]): Item {
+    character.items.push(item);
+
+    const index: number = items.indexOf(item);
+    if(index !== -1) {
+      items.splice(index, 1);
+    }
+
+    return item;
+  }
 }

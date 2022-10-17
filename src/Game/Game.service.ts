@@ -11,11 +11,13 @@ import { Character, CharacterService } from "../Character";
 import { PathFinder, PathFinderGeneratorService } from "../_Shared/algorithms";
 import { ObstacleCreateInput } from "../Obstacle/ObstacleCreate.input";
 import { AudioService } from "../_Shared/audio";
+import { Battle, BattleService } from "../Battle";
 
 const audioService: AudioService = new AudioService();
 const characterService: CharacterService = new CharacterService();
 const itemService: ItemService = new ItemService();
 const obstacleService: ObstacleService = new ObstacleService();
+const battleService: BattleService = new BattleService();
 const pathFinderService: PathFinder = new PathFinderGeneratorService().getPathFinderService(Config.pathFinderAlgorithm);
 
 export class GameService {
@@ -82,7 +84,7 @@ export class GameService {
     return obstacles.some(i => isPointSame(i, point));
   }
 
-  startTravel(character: Character, destination: Point, squares: Point[], obstacles: Obstacle[]): Partial<Character> {
+  startTravel(character: Character, destination: Point, squares: Point[], obstacles: Obstacle[]): void {
     if (destination.x && destination.y && !isPointSame(character, destination) && character.state === TravelState.stay) {
       const travelPath: TravelSquare[] = pathFinderService.findPath({ start: character, end: destination, commonGrid: squares, obstacles });
       
@@ -90,31 +92,28 @@ export class GameService {
         const travelStartTime: number = new Date().getTime();
         const travelFinishTime: number  = travelStartTime + travelPath.length * Config.milisecondsForSquareSpeed;
 
-        return {
-          ...character,
+        Object.assign(character, {
           travelPath,
           state: TravelState.travel,
           travelStartTime,
           travelFinishTime,
           destination,
-        };
+        });
       }
     }
-
-    return {};
   }
 
-  finishTravel(character: Character): Partial<Character> {
+  finishTravel(character: Character): Partial<void> {
     const { x, y } = character.travelPath[character.travelPath.length - 1];
 
-    return {
+    Object.assign(character, {
       x,
       y,
       state: TravelState.stay,
       travelPath: [],
       travelStartTime: 0,
       travelFinishTime: 0,
-    };
+    });
   }
 
   isPlayerOnEnemy(player: Character, characters: Character[]): Character | undefined {
@@ -125,22 +124,11 @@ export class GameService {
       && player.id !== character.id );
   }
 
-  characterClaimItem(character: Character, item: Item, items: Item[]): Item {
-    character.items.push(item);
-
-    const index: number = items.indexOf(item);
-    if(index !== -1) {
-      items.splice(index, 1);
-    }
-
-    return item;
-  }
-
   isPlayerOnItem(characterLocation: Point, items: Item[]): Item | undefined {
     return items.find(({ x, y }: Item) => characterLocation.x === x && characterLocation.y === y);
   }
 
-  travel(character: Character): Partial<Character> {
+  travel(character: Character, characters: Character[], items: Item[], battle: Battle): boolean {
     let newCharacterPoint: Point = { x: character.x, y: character.y };
 
     if (character.state === TravelState.travel) {
@@ -154,8 +142,34 @@ export class GameService {
 
         newCharacterPoint = character.travelPath[currectTravelSquareIndex];
       }
+
+      const { x, y } = newCharacterPoint;
+
+      if (!x || !y) {
+        return false;
+      }
+      
+      Object.assign(character, { x, y })
+      const itemFound: Item | undefined = this.isPlayerOnItem({ x, y }, items);
+      const enemyFound: Character | undefined = this.isPlayerOnEnemy(character, characters);
+  
+      if (itemFound) {
+        characterService.claimItem(character, itemFound, items);
+      }
+  
+      if (enemyFound) {
+        battleService.start(battle, character, enemyFound);
+      }
+  
+      if (isPointSame(character.destination, { x, y })) {
+        if (character.state === TravelState.travel) {
+          this.finishTravel(character);
+        }
+      }
+
+      return true;
     }
 
-    return newCharacterPoint;
+    return false;
   }
 } 

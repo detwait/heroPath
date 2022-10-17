@@ -7,6 +7,24 @@ const characterService: CharacterService = new CharacterService();
 const battleLogService: BattleLogService = new BattleLogService();
 
 export class BattleService {
+  start(battle: Battle, player: Character, opponent: Character): Battle {
+    if (!battle.isActive) {
+      Object.assign(battle, {
+        isActive: true,
+        player,
+        opponent,
+        log: ['Battle started'],
+      });
+    }
+
+    return battle;
+  }
+
+  close(battle: Battle): Battle {
+    battle.isActive = false;
+    return battle;
+  }
+
   proccess(battle: Battle): Battle {
     this.proccessCharacter(battle, battle.player, battle.opponent);
     this.proccessCharacter(battle, battle.opponent, battle.player);
