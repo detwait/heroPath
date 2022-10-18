@@ -1,3 +1,4 @@
+import { GameStatus } from "./Game/GameStatus.enum";
 import { ItemInfoInput } from "./Item/ItemInfo.interface";
 
 type ConfigType = {
@@ -11,6 +12,7 @@ type ConfigType = {
   avatars: Record<string, string>,
   items: Record<string, ItemInfoInput>,
   audios: Record<string, string>,
+  gameMessage: Record<GameStatus, string>,
 };
 
 const skins: Record<string, string> = {
@@ -77,4 +79,20 @@ export const Config: ConfigType = {
 		8: 20000,
 		9: 25000,
 	},
+
+  gameMessage: {
+    [GameStatus.preview]: `The angry dragon is roaming the realm.
+                           Only you can stop the evil.
+                           Althouh you are no much for the dragon now.
+                           But the smart way maybe not a direct way...`,
+    [GameStatus.running]: ``,
+    [GameStatus.lost]:   `The hero fought valiantly.
+                          The hero fought nobly.
+                          The hero fought honorably.
+                          And the hero died.`,
+    [GameStatus.won]:    `That's my epic tale.
+                          Our champion prevailed.
+                          Defeated the villain.
+                          Now pour him some ale.`,
+  },
 }

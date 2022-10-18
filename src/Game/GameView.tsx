@@ -8,15 +8,18 @@ import { Character } from '../Character';
 import { Item } from '../Item';
 import { Battle, BattleService, BattleView } from '../Battle';
 import { PlayerInfoView } from './PlayerInfoView/PlayerInfoView';
-import { GameLocationView } from './GameLocation/GameLocationView';
+import { GameLocationView } from './GameLocationView/GameLocationView';
 import { Game } from './Game';
 import { Obstacle } from '../Obstacle/Obstacle';
+import { GameStatus } from './GameStatus.enum';
+import { GameMessageView } from './GameMessageView/GameMessageView';
 
 const gameService: GameService = new GameService();
 const battleService: BattleService = new BattleService();
 const game: Game = new Game({ ...Seed });
 
 export function GameView() {
+  const [gameStatus, setGameStatus] = useState<GameStatus>(game.status);
   const [characters, setCharacters] = useState<Character[]>(game.characters);
   const [items, setItems] = useState<Item[]>(game.items);
   const [battle, setBattle] = useState<Battle>(game.battle);
@@ -29,6 +32,10 @@ export function GameView() {
     const timer = setInterval(() => { travel(); }, Config.appIntervalFrequencyMiliseconds);
     return () => { timer && clearInterval(timer); };
   });
+
+  function startGame(): void {
+    setGameStatus(GameStatus.running)
+  }
 
   function proccessBattle(battle: Battle): void {
     battle = battleService.proccess(battle);
@@ -60,25 +67,36 @@ export function GameView() {
       <header>
         <h1>Hero Path</h1>
       </header>
-        { battle.isActive 
-          ? <BattleView 
-              battle={battle}
-              onAttack={() => proccessBattle(battle)} 
-              onClose={closeBattle}>
-            </BattleView>
-          : <main>
-              <PlayerInfoView
-                player={player}>
-              </PlayerInfoView>
-              <GameLocationView
-                characters={characters}
-                items={items}
-                obstacles={obstacles}
-                squares={squares}
-                startTravel={startTravel} >
-              </GameLocationView>
-            </main> 
-        }
+      {(() => {
+          if (gameStatus !== GameStatus.running) {
+            return (
+              <GameMessageView
+                gameStatus={gameStatus}
+                startGame={startGame}>
+              </GameMessageView>
+            )
+          } else {
+            return ( battle.isActive 
+              ? <BattleView 
+                  battle={battle}
+                  onAttack={() => proccessBattle(battle)} 
+                  onClose={closeBattle}>
+                </BattleView>
+              : <main>
+                  <PlayerInfoView
+                    player={player}>
+                  </PlayerInfoView>
+                  <GameLocationView
+                    characters={characters}
+                    items={items}
+                    obstacles={obstacles}
+                    squares={squares}
+                    startTravel={startTravel} >
+                  </GameLocationView>
+                </main> )
+          }
+        })()}
+  
       <footer>
       </footer>
     </div>
