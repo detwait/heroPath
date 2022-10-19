@@ -45,6 +45,12 @@ export function GameView() {
   function closeBattle(): void {
     battleService.close(battle);
     setBattle({ ...battle });
+
+    if (gameService.isGameWon(characters)) {
+      setGameStatus(GameStatus.won)
+    } else if (gameService.isGamLost(characters)) {
+      setGameStatus(GameStatus.lost)
+    }
   }
 
   function startTravel(destination: Point): void {
@@ -72,27 +78,27 @@ export function GameView() {
             return (
               <GameMessageView
                 gameStatus={gameStatus}
-                startGame={startGame}>
-              </GameMessageView>
+                startGame={startGame}
+              ></GameMessageView>
             )
           } else {
             return ( battle.isActive 
               ? <BattleView 
                   battle={battle}
-                  onAttack={() => proccessBattle(battle)} 
-                  onClose={closeBattle}>
-                </BattleView>
+                  proccessBattle={() => proccessBattle(battle)} 
+                  closeBattle={closeBattle}
+                ></BattleView>
               : <main>
                   <PlayerInfoView
-                    player={player}>
-                  </PlayerInfoView>
+                    player={player}
+                  ></PlayerInfoView>
                   <GameLocationView
                     characters={characters}
                     items={items}
                     obstacles={obstacles}
                     squares={squares}
-                    startTravel={startTravel} >
-                  </GameLocationView>
+                    startTravel={startTravel}
+                  ></GameLocationView>
                 </main> )
           }
         })()}

@@ -21,6 +21,16 @@ const battleService: BattleService = new BattleService();
 const pathFinderService: PathFinder = new PathFinderGeneratorService().getPathFinderService(Config.pathFinderAlgorithm);
 
 export class GameService {
+  isGameWon(characters: Character[]): boolean {
+    const mainBoss: Character = this.getMainBoss(characters);
+    return characterService.isDead(mainBoss);
+  }
+
+  isGamLost(characters: Character[]): boolean {
+    const player: Character = this.getPlayer(characters);
+    return characterService.isDead(player);
+  }
+
   createAudio(): HTMLAudioElement {
     return audioService.create(Config.audios.location);
   }
@@ -53,6 +63,16 @@ export class GameService {
     }
 
     return player;
+  }
+
+  getMainBoss(characters: Character[]): Character {
+    const mainBoss: Character | undefined = characters.find(({ isMainBoss }: Character) => isMainBoss);
+
+    if (!mainBoss) {
+      throw new Error('No main boss among characters');
+    }
+
+    return mainBoss;
   }
 
   generateObstacles(xSquaresAmount: number, ySquaresAmount: number, characters: Character[], items: Item[]): Obstacle[] {

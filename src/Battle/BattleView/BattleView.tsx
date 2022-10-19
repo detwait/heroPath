@@ -8,7 +8,7 @@ import { BattleViewProps } from './BattleView.props';
 const imageService: ImageService = new ImageService();
 const battleService: BattleService = new BattleService();
 
-export function BattleView({ battle, onAttack, onClose }: BattleViewProps) {
+export function BattleView({ battle, proccessBattle, closeBattle }: BattleViewProps) {
   return (
     <div className='Battle'>
       <div className='BattleFighters'>
@@ -24,14 +24,13 @@ export function BattleView({ battle, onAttack, onClose }: BattleViewProps) {
         {(() => {
           if (!battleService.isBattleOver(battle)) {
             return (
-              <button onClick={() => onAttack(battle)}>
+              <button onClick={() => proccessBattle(battle)}>
                 <img src={`${imageService.getPath(ImageType.action, 'attack.png')}`} alt="avatar" />
               </button>
             )
-          } 
-          if (battleService.isBattleWon(battle)) {
+          } else {
             return (
-              <button onClick={() => onClose()}>
+              <button onClick={() => closeBattle()}>
                 <img src={`${imageService.getPath(ImageType.action, 'map.png')}`} alt="avatar" />
               </button>
             )

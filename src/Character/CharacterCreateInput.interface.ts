@@ -13,4 +13,5 @@ export interface CharacterCreateInput {
 	x: number;
 	y: number;
 	items: ItemCreateInput[];
+	isMainBoss?: boolean;
 }

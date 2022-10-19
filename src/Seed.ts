@@ -72,6 +72,7 @@ const characters: CharacterCreateInput[] = [
     x: 14,
     y: 25,
     items: [],
+    isMainBoss: true,
   },
 ];
 

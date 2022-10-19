@@ -2,7 +2,7 @@ import { Battle } from "../Battle";
 
 export type BattleViewProps = {
   battle: Battle;
-  onAttack: (args: any) => void;
-  onClose: () => void;
+  proccessBattle: (args: any) => void;
+  closeBattle: () => void;
   children?: React.ReactNode;
 }

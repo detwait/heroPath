@@ -28,6 +28,7 @@ export class Character implements IdEntity, Point {
   travelFinishTime: number = 0;
   destination: Point;
   items: Item[];
+  isMainBoss: boolean = false;
 
   constructor({
     isPlayer,
@@ -42,6 +43,7 @@ export class Character implements IdEntity, Point {
     x,
     y,
     items,
+    isMainBoss,
   }: CharacterCreateInput) {
     this.isPlayer = isPlayer || false;
     this.id = id;
@@ -56,5 +58,6 @@ export class Character implements IdEntity, Point {
     this.y = y;
     this.destination = { x, y };
     this.items = [...items].map((item: ItemCreateInput) => itemService.create(item));
+    this.isMainBoss = !!isMainBoss;
   }
 }

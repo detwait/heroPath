@@ -81,18 +81,18 @@ export const Config: ConfigType = {
 	},
 
   gameMessage: {
-    [GameStatus.preview]: `The angry dragon is roaming the realm.
-                           Only you can stop the evil.
-                           Althouh you are no much for the dragon now.
-                           But the smart way maybe not a direct way...`,
+    [GameStatus.preview]: `The angry dragon is roaming the realm. <br />
+                           Only you can stop the evil. <br />
+                           Althouh you are no much for the dragon now. <br />
+                           But a direct way may not appear as a smart way...`,
     [GameStatus.running]: ``,
-    [GameStatus.lost]:   `The hero fought valiantly.
-                          The hero fought nobly.
-                          The hero fought honorably.
+    [GameStatus.lost]:   `The hero fought valiantly. <br />
+                          The hero fought nobly. <br />
+                          The hero fought honorably. <br />
                           And the hero died.`,
-    [GameStatus.won]:    `That's my epic tale.
-                          Our champion prevailed.
-                          Defeated the villain.
+    [GameStatus.won]:    `That's my epic tale. <br />
+                          Our champion prevailed. <br />
+                          Defeated the villain. <br />
                           Now pour him some ale.`,
   },
 }
