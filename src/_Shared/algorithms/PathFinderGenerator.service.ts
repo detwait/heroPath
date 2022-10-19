@@ -1,11 +1,11 @@
-import { AstarPathFinderService } from "./AstarPathFinder/AstarPathFinder.service";
-import { JumpPointPathFinderService } from "./JumpPointPathFinder/JumpPointPathFinder.service";
+import { astarPathFinderService } from "./AstarPathFinder/AstarPathFinder.service";
+import { jumpPointPathFinderService } from "./JumpPointPathFinder/JumpPointPathFinder.service";
 import { PathFinder } from "./PathFinder.interface";
 
-export class PathFinderGeneratorService {
+class PathFinderGeneratorService {
   pathFindersMap: Record<string, PathFinder> = {
-    'astar': new AstarPathFinderService(),
-    'jumppoint': new JumpPointPathFinderService(),
+    'astar': astarPathFinderService,
+    'jumppoint': jumpPointPathFinderService,
   };
 
   getPathFinderService(algorithm: string): PathFinder {
@@ -18,3 +18,5 @@ export class PathFinderGeneratorService {
     return pathFinderService;
   }
 }
+
+export const pathFinderGeneratorService = new PathFinderGeneratorService();

@@ -1,12 +1,9 @@
 
 import { CharacterAttributesView } from '../../Character/CharacterAttributesView/CharacterAttributesView';
-import { ImageService, ImageType } from '../../_Shared/image';
-import { BattleService } from '../Battle.service';
+import { imageService, ImageType } from '../../_Shared/image';
+import { battleService } from '../Battle.service';
 import './BattleView.css';
 import { BattleViewProps } from './BattleView.props';
-
-const imageService: ImageService = new ImageService();
-const battleService: BattleService = new BattleService();
 
 export function BattleView({ battle, proccessBattle, closeBattle }: BattleViewProps) {
   return (

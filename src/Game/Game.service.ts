@@ -5,22 +5,17 @@ import { TravelSquare } from "../_Core/TravelSquare";
 import { isPointSame } from "../_Core/Geometry.utils";
 import { Obstacle } from "../Obstacle/Obstacle";
 import { CharacterCreateInput } from "../Character/CharacterCreateInput.interface";
-import { ObstacleService } from "../Obstacle";
-import { Item, ItemCreateInput, ItemService } from "../Item";
-import { Character, CharacterService } from "../Character";
-import { PathFinder, PathFinderGeneratorService } from "../_Shared/algorithms";
+import { obstacleService } from "../Obstacle";
+import { Item, ItemCreateInput, itemService } from "../Item";
+import { Character, characterService } from "../Character";
+import { PathFinder, pathFinderGeneratorService } from "../_Shared/algorithms";
 import { ObstacleCreateInput } from "../Obstacle/ObstacleCreate.input";
-import { AudioService } from "../_Shared/audio";
-import { Battle, BattleService } from "../Battle";
+import { audioService } from "../_Shared/audio";
+import { Battle, battleService } from "../Battle";
 
-const audioService: AudioService = new AudioService();
-const characterService: CharacterService = new CharacterService();
-const itemService: ItemService = new ItemService();
-const obstacleService: ObstacleService = new ObstacleService();
-const battleService: BattleService = new BattleService();
-const pathFinderService: PathFinder = new PathFinderGeneratorService().getPathFinderService(Config.pathFinderAlgorithm);
+const pathFinderService: PathFinder = pathFinderGeneratorService.getPathFinderService(Config.pathFinderAlgorithm);
 
-export class GameService {
+class GameService {
   isGameWon(characters: Character[]): boolean {
     const mainBoss: Character = this.getMainBoss(characters);
     return characterService.isDead(mainBoss);
@@ -201,3 +196,5 @@ export class GameService {
     return false;
   }
 } 
+
+export const gameService = new GameService();

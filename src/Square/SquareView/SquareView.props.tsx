@@ -1,4 +1,4 @@
-import { Point } from "../_Core/Point";
+import { Point } from "../../_Core/Point";
 
 export type SquareViewProps = {
   entity: Point;

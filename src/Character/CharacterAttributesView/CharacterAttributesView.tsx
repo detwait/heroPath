@@ -1,11 +1,8 @@
 import './CharacterAttributesView.css';
 import 'react-tippy/dist/tippy.css'
-import { ImageService, ImageType } from '../../_Shared/image';
-import { CharacterService } from '../Character.service';
+import { imageService, ImageType } from '../../_Shared/image';
+import { characterService } from '../Character.service';
 import { CharacterAttributesViewProps } from './CharacterAttributesView.props';
-
-const imageService: ImageService = new ImageService();
-const characterService: CharacterService = new CharacterService();
 
 export function CharacterAttributesView({ character }: CharacterAttributesViewProps) {
   return (

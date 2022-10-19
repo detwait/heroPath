@@ -1,6 +1,6 @@
 import { Character } from "../Character";
 
-export class BattleLogService {
+class BattleLogService {
   hit(log: string[], character1: Character, character2: Character, damage: number) {
     log.push(`${character1.name} hits ${character2.name} with ${damage} damage`);
   }
@@ -25,3 +25,5 @@ export class BattleLogService {
     log.push(`${character.name} achives ${level} level!`);
   }
 }
+
+export const battleLogService = new BattleLogService();

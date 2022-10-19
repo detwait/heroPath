@@ -1,10 +1,8 @@
 import { Tooltip } from 'react-tippy';
 import './CharacterInventarView.css';
 import 'react-tippy/dist/tippy.css'
-import { ImageService, ImageType } from '../../_Shared/image';
+import { imageService, ImageType } from '../../_Shared/image';
 import { CharacterInventarViewProps } from './CharacterInventarView.props';
-
-const imageService: ImageService = new ImageService();
 
 export function CharacterInventarView({ character }: CharacterInventarViewProps) {
   return (

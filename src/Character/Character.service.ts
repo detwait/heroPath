@@ -3,7 +3,7 @@ import { Item } from '../Item';
 import { Character } from './Character';
 import { CharacterCreateInput } from "./CharacterCreateInput.interface";
 
-export class CharacterService {
+class CharacterService {
 	calculateMaxHp(character: Character): number {
 		return character.nativeHp + character.level * 10;
 	}
@@ -72,3 +72,5 @@ export class CharacterService {
     return item;
   }
 }
+
+export const characterService = new CharacterService();

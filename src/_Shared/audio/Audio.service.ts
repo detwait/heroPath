@@ -1,4 +1,4 @@
-export class AudioService {
+class AudioService {
   create(value?: string): HTMLAudioElement {
     const audio = new Audio(`${process.env.PUBLIC_URL}/music/location.mp3`);
     audio.setAttribute('loop', 'true');
@@ -14,3 +14,5 @@ export class AudioService {
     audio.setAttribute('src', `${process.env.PUBLIC_URL}/audios/${value}`)
   }
 }
+
+export const audioService = new AudioService();

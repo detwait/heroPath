@@ -1,2 +1,2 @@
-export * from './ObstacleView';
+export * from './ObstacleView/ObstacleView';
 export * from './Obstacle.service';

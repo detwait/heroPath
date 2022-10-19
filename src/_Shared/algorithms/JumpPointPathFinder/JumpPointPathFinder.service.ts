@@ -6,7 +6,7 @@ import { JumpPointNode } from "./JumpPointNode";
 import { JumpPointNodeStatus } from "./JumpPointNodeStatus.enum";
 import { PathFinder } from "../PathFinder.interface";
 
-export class JumpPointPathFinderService implements PathFinder {
+class JumpPointPathFinderService implements PathFinder {
   grid: JumpPointNode[] = [];
   obstacles: Point[] = [];
   startNode: JumpPointNode | undefined;
@@ -193,3 +193,5 @@ export class JumpPointPathFinderService implements PathFinder {
     return this.jump(this.getNode(x + dx, y + dy), x, y);
   }
 }
+
+export const jumpPointPathFinderService = new JumpPointPathFinderService();

@@ -1,1 +1,1 @@
-export * from './SquareView';
+export * from './SquareView/SquareView';

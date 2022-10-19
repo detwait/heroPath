@@ -1,5 +1,5 @@
+import { Config } from '../../Config';
 import './SquareView.css';
-import { Config } from '../Config';
 import { SquareViewProps } from './SquareView.props';
 
 export function SquareView({entity, onClick}: SquareViewProps) {

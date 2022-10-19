@@ -1,9 +1,7 @@
 import './CharacterView.css';
-import { Config } from '../Config';
+import { Config } from '../../Config';
 import { CharacterViewProps } from './CharacterView.props';
-import { ImageService, ImageType } from '../_Shared/image';
-
-const imageService: ImageService = new ImageService();
+import { imageService, ImageType } from '../../_Shared/image';
 
 export function CharacterView({ entity, onClick }: CharacterViewProps): JSX.Element {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;

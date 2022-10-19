@@ -1,12 +1,9 @@
-import { Character, CharacterService } from "../Character";
+import { Character, characterService } from "../Character";
 import { Battle } from "./Battle";
 import { BattleAttackResult } from "./BattleAttackResult";
-import { BattleLogService } from "./BattleLog.service";
+import { battleLogService } from "./BattleLog.service";
 
-const characterService: CharacterService = new CharacterService();
-const battleLogService: BattleLogService = new BattleLogService();
-
-export class BattleService {
+class BattleService {
   start(battle: Battle, player: Character, opponent: Character): Battle {
     if (!battle.isActive) {
       Object.assign(battle, {
@@ -94,3 +91,5 @@ export class BattleService {
     return characterService.getStrength(attacker);
   }
 }
+
+export const battleService = new BattleService();

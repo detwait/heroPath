@@ -4,11 +4,9 @@ import { Obstacle } from "../Obstacle/Obstacle";
 import { GameCreateInput } from "./GameCreateInput.interface";
 import { Item } from "../Item";
 import { Character } from "../Character";
-import { GameService } from "./Game.service";
+import { gameService } from "./Game.service";
 import { Battle } from "../Battle";
 import { GameStatus } from "./GameStatus.enum";
-
-const gameService: GameService = new GameService();
 
 export class Game {
   squares: Point[] = [];

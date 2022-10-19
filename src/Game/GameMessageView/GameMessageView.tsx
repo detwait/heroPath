@@ -1,10 +1,8 @@
 import './GameMessageView.css';
 import { GameMessageViewProps } from './GameMessageView.props';
 import { Config } from '../../Config';
-import { ImageService, ImageType } from '../../_Shared/image';
+import { imageService, ImageType } from '../../_Shared/image';
 import { GameStatus } from '../GameStatus.enum';
-
-const imageService: ImageService = new ImageService();
 
 export function GameMessageView({ gameStatus, startGame }: GameMessageViewProps) {
   return (

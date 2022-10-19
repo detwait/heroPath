@@ -1,11 +1,9 @@
-import './ObstacleView.css';
-import { Config } from '../Config';
-import { ObstacleViewProps } from './ObstacleView.props';
-import { ImageService, ImageType } from '../_Shared/image';
+import { Config } from '../../Config';
+import { imageService, ImageType } from '../../_Shared/image';
+import './ItemView.css';
+import { ItemViewProps } from './ItemView.props';
 
-const imageService: ImageService = new ImageService();
-
-export function ObstacleView({ entity }: ObstacleViewProps) {
+export function ItemView({ entity, onClick }: ItemViewProps): JSX.Element {
   const sideLength = Config.boardSideLength / Config.boardSideSquaresAmount;
 
   const styles: React.CSSProperties = {
@@ -17,6 +15,10 @@ export function ObstacleView({ entity }: ObstacleViewProps) {
   };
 
   return (
-    <div className='Obstacle' style={styles} />
+    <div
+      className="Item"
+      onClick={() => onClick(entity)} 
+      style={styles}>
+    </div>
   );
 }

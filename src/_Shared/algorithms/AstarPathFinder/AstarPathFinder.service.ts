@@ -6,7 +6,7 @@ import { Point } from "../../../_Core/Point";
 import { heuristic, pathFromParents } from "../../../_Core/Geometry.utils";
 import { PathFinder } from "../PathFinder.interface";
 
-export class AstarPathFinderService implements PathFinder {
+class AstarPathFinderService implements PathFinder {
   grid: AstarNode[] = [];
 
   findPath({ commonGrid, start, end, obstacles }: FindPathInput): TravelSquare[] {
@@ -94,3 +94,5 @@ export class AstarPathFinderService implements PathFinder {
     return this.grid.filter(i => i.status = AstarNodeStatus.closed);
   }
 }
+
+export const astarPathFinderService = new AstarPathFinderService();
