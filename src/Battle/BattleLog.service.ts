@@ -1,4 +1,4 @@
-import { Character } from "../Character";
+import { Character } from '../Character';
 
 class BattleLogService {
   hit(log: string[], character1: Character, character2: Character, damage: number) {

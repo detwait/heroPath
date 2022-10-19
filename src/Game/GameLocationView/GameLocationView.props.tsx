@@ -1,13 +1,13 @@
-import { Character } from "../../Character";
-import { Item } from "../../Item";
-import { Obstacle } from "../../Obstacle/Obstacle";
-import { Point } from "../../_Core/Point";
+import { Character } from '../../Character';
+import { Item } from '../../Item';
+import { Obstacle } from '../../Obstacle/Obstacle';
+import { Point } from '../../_Core/Point';
 
 export type GameLocationViewProps = {
   characters: Character[];
   items: Item[];
   obstacles: Obstacle[];
   squares: Point[];
-  startTravel: (args: any) => void;
+  startTravel: (args: Point) => void;
   children?: React.ReactNode;
-}
+};

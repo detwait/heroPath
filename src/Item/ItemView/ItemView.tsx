@@ -9,16 +9,10 @@ export function ItemView({ entity, onClick }: ItemViewProps): JSX.Element {
   const styles: React.CSSProperties = {
     width: `${sideLength}px`,
     height: `${sideLength}px`,
-    top:  (entity.y - 1) * sideLength + 'px',
+    top: (entity.y - 1) * sideLength + 'px',
     left: (entity.x - 1) * sideLength + 'px',
     background: `url('${imageService.getPath(ImageType.skin, entity.skin)}')`,
   };
 
-  return (
-    <div
-      className="Item"
-      onClick={() => onClick(entity)} 
-      style={styles}>
-    </div>
-  );
+  return <div className="Item" onClick={() => onClick(entity)} style={styles}></div>;
 }

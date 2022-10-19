@@ -16,7 +16,7 @@ import { GameMessageView } from '../GameMessageView/GameMessageView';
 
 const game: Game = new Game({ ...Seed });
 
-export function GameView() {
+export function GameView(): JSX.Element {
   const [gameStatus, setGameStatus] = useState<GameStatus>(game.status);
   const [characters, setCharacters] = useState<Character[]>(game.characters);
   const [items, setItems] = useState<Item[]>(game.items);
@@ -27,12 +27,16 @@ export function GameView() {
   const player: Character = gameService.getPlayer(characters);
 
   useEffect(() => {
-    const timer = setInterval(() => { travel(); }, Config.appIntervalFrequencyMiliseconds);
-    return () => { timer && clearInterval(timer); };
+    const timer = setInterval(() => {
+      travel();
+    }, Config.appIntervalFrequencyMiliseconds);
+    return () => {
+      timer && clearInterval(timer);
+    };
   });
 
   function startGame(): void {
-    setGameStatus(GameStatus.running)
+    setGameStatus(GameStatus.running);
   }
 
   function proccessBattle(battle: Battle): void {
@@ -45,9 +49,9 @@ export function GameView() {
     setBattle({ ...battle });
 
     if (gameService.isGameWon(characters)) {
-      setGameStatus(GameStatus.won)
+      setGameStatus(GameStatus.won);
     } else if (gameService.isGamLost(characters)) {
-      setGameStatus(GameStatus.lost)
+      setGameStatus(GameStatus.lost);
     }
   }
 
@@ -60,49 +64,39 @@ export function GameView() {
     const isUpdated: boolean = gameService.travel(player, characters, items, battle, game.audio);
 
     if (isUpdated) {
-      setItems([ ...items ]);
-      setCharacters([ ...characters ]);
+      setItems([...items]);
+      setCharacters([...characters]);
       setBattle({ ...battle });
     }
   }
 
   return (
-    <div className='Game' onClick={ () => audio.play() }>
+    <div className="Game" onClick={() => audio.play()}>
       <header>
         <h1>Hero Path</h1>
       </header>
       {(() => {
-          if (gameStatus !== GameStatus.running) {
-            return (
-              <GameMessageView
-                gameStatus={gameStatus}
-                startGame={startGame}
-              ></GameMessageView>
-            )
-          } else {
-            return ( battle.isActive 
-              ? <BattleView 
-                  battle={battle}
-                  proccessBattle={() => proccessBattle(battle)} 
-                  closeBattle={closeBattle}
-                ></BattleView>
-              : <main>
-                  <PlayerInfoView
-                    player={player}
-                  ></PlayerInfoView>
-                  <GameLocationView
-                    characters={characters}
-                    items={items}
-                    obstacles={obstacles}
-                    squares={squares}
-                    startTravel={startTravel}
-                  ></GameLocationView>
-                </main> )
-          }
-        })()}
-  
-      <footer>
-      </footer>
+        if (gameStatus !== GameStatus.running) {
+          return <GameMessageView gameStatus={gameStatus} startGame={startGame}></GameMessageView>;
+        } else {
+          return battle.isActive ? (
+            <BattleView battle={battle} proccessBattle={() => proccessBattle(battle)} closeBattle={closeBattle}></BattleView>
+          ) : (
+            <main>
+              <PlayerInfoView player={player}></PlayerInfoView>
+              <GameLocationView
+                characters={characters}
+                items={items}
+                obstacles={obstacles}
+                squares={squares}
+                startTravel={startTravel}
+              ></GameLocationView>
+            </main>
+          );
+        }
+      })()}
+
+      <footer></footer>
     </div>
   );
-};
+}

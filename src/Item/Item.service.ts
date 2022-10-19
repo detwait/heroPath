@@ -1,6 +1,6 @@
-import { Config } from "../Config";
-import { Item } from "./Item";
-import { ItemCreateInput } from "./ItemCreateInput.interface";
+import { Config } from '../Config';
+import { Item } from './Item';
+import { ItemCreateInput } from './ItemCreateInput.interface';
 
 class ItemService {
   create(input: ItemCreateInput): Item {

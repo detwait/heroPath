@@ -1,7 +1,7 @@
-import { Item } from "../Item";
+import { Item } from '../Item';
 
 export type ItemViewProps = {
   entity: Item;
-  onClick: (args: any) => void;
+  onClick: (args: unknown) => void;
   children?: React.ReactNode;
-}
+};

@@ -1,16 +1,16 @@
-import { TravelSquare } from "../../../_Core/TravelSquare";
-import { FindPathInput } from "../../../_Core/FindPath.input";
-import { AstarNode } from "./AstarNode";
-import { AstarNodeStatus } from "./AstarNodeStatus.enum";
-import { Point } from "../../../_Core/Point";
-import { heuristic, pathFromParents } from "../../../_Core/Geometry.utils";
-import { PathFinder } from "../PathFinder.interface";
+import { TravelSquare } from '../../../_Core/TravelSquare';
+import { FindPathInput } from '../../../_Core/FindPath.input';
+import { AstarNode } from './AstarNode';
+import { AstarNodeStatus } from './AstarNodeStatus.enum';
+import { Point } from '../../../_Core/Point';
+import { heuristic, pathFromParents } from '../../../_Core/Geometry.utils';
+import { PathFinder } from '../PathFinder.interface';
 
 class AstarPathFinderService implements PathFinder {
   grid: AstarNode[] = [];
 
   findPath({ commonGrid, start, end, obstacles }: FindPathInput): TravelSquare[] {
-    this.grid = commonGrid.map(i => ({
+    this.grid = commonGrid.map((i) => ({
       ...i,
       parent: null,
       g: null,
@@ -33,7 +33,7 @@ class AstarPathFinderService implements PathFinder {
     startNode.status = AstarNodeStatus.open;
 
     while (this.getOpenedList().length > 0) {
-      let currentNode: AstarNode = this.findBestOpenedNode();
+      const currentNode: AstarNode = this.findBestOpenedNode();
       currentNode.status = AstarNodeStatus.closed;
 
       if (currentNode.x === end.x && currentNode.y === end.y) {
@@ -41,7 +41,7 @@ class AstarPathFinderService implements PathFinder {
       } else {
         const neighbours: AstarNode[] = this.getNodeNeighbours(currentNode);
 
-        for (let neighbour of neighbours) {
+        for (const neighbour of neighbours) {
           if (neighbour.status === AstarNodeStatus.closed || neighbour.isObstacle) {
             continue;
           }
@@ -50,8 +50,8 @@ class AstarPathFinderService implements PathFinder {
 
           if (!neighbour.g || neighbour.g > g) {
             Object.assign(neighbour, { g });
-          } 
-          
+          }
+
           if (neighbour.status === AstarNodeStatus.notVisided) {
             const h: number = heuristic(neighbour, endNode);
 
@@ -70,16 +70,15 @@ class AstarPathFinderService implements PathFinder {
   }
 
   getNode(x: number, y: number): AstarNode | undefined {
-    return this.grid.find(i => i.x === x && i.y === y);
+    return this.grid.find((i) => i.x === x && i.y === y);
   }
 
-
   getOpenedList() {
-    return this.grid.filter(i => i.status === 'OPEN');
+    return this.grid.filter((i) => i.status === 'OPEN');
   }
 
   findBestOpenedNode(): AstarNode {
-    return this.getOpenedList().reduce((acc, i) => acc.f && (!i.f || acc.f < i.f) ? acc : i);
+    return this.getOpenedList().reduce((acc, i) => (acc.f && (!i.f || acc.f < i.f) ? acc : i));
   }
 
   getNodeNeighbours({ x, y }: AstarNode): AstarNode[] {
@@ -87,11 +86,11 @@ class AstarPathFinderService implements PathFinder {
     const eastNode: AstarNode | undefined = this.getNode(x + 1, y);
     const northNode: AstarNode | undefined = this.getNode(x, y - 1);
     const southNode: AstarNode | undefined = this.getNode(x, y + 1);
-    return [westNode, eastNode, northNode, southNode].filter(i => !!i) as AstarNode[] || [];
+    return ([westNode, eastNode, northNode, southNode].filter((i) => !!i) as AstarNode[]) || [];
   }
 
   getClosedList() {
-    return this.grid.filter(i => i.status = AstarNodeStatus.closed);
+    return this.grid.filter((i) => (i.status = AstarNodeStatus.closed));
   }
 }
 

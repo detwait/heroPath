@@ -1,7 +1,7 @@
-import { Character, characterService } from "../Character";
-import { Battle } from "./Battle";
-import { BattleAttackResult } from "./BattleAttackResult";
-import { battleLogService } from "./BattleLog.service";
+import { Character, characterService } from '../Character';
+import { Battle } from './Battle';
+import { BattleAttackResult } from './BattleAttackResult';
+import { battleLogService } from './BattleLog.service';
 
 class BattleService {
   start(battle: Battle, player: Character, opponent: Character): Battle {
@@ -69,14 +69,14 @@ class BattleService {
       battleLogService.miss(battle.log, attacker);
     }
   }
-  
+
   attack(attacker: Character, defender: Character): BattleAttackResult {
     const isHit: boolean = this.isAttackHit(attacker, defender);
 
     return {
       isHit,
       damage: this.calculateDamage(attacker),
-    }
+    };
   }
 
   isAttackHit(attacker: Character, defender: Character): boolean {

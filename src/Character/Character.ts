@@ -1,53 +1,39 @@
-import { IdEntity } from "../_Core/IdEntity.interface";
-import { Point } from "../_Core/Point";
-import { TravelSquare } from "../_Core/TravelSquare";
-import { TravelState } from "../Game/TravelState.enum";
-import { CharacterCreateInput } from "./CharacterCreateInput.interface";
-import { Item, ItemCreateInput, itemService } from "../Item";
+import { IdEntity } from '../_Core/IdEntity.interface';
+import { Point } from '../_Core/Point';
+import { TravelSquare } from '../_Core/TravelSquare';
+import { TravelState } from '../Game/TravelState.enum';
+import { CharacterCreateInput } from './CharacterCreateInput.interface';
+import { Item, ItemCreateInput, itemService } from '../Item';
 
 export class Character implements IdEntity, Point {
-  isPlayer: boolean = false;
+  isPlayer = false;
   id: string;
-  name: string = "default";
-  skin: string = "";
-	avatar: string = "";
-  level: number = 1;
-  maxHp: number = 1;
-  nativeHp: number = 0;
+  name = 'default';
+  skin = '';
+  avatar = '';
+  level = 1;
+  maxHp = 1;
+  nativeHp = 0;
   hp: number = this.maxHp;
-  strength: number = 1;
-  agility: number = 1;
-  exp: number = 0;
-  x: number = 1;
-  y: number = 1;
+  strength = 1;
+  agility = 1;
+  exp = 0;
+  x = 1;
+  y = 1;
   state: TravelState = TravelState.stay;
   travelPath: TravelSquare[] = [];
-  travelStartTime: number = 0;
-  travelFinishTime: number = 0;
+  travelStartTime = 0;
+  travelFinishTime = 0;
   destination: Point;
   items: Item[];
-  isMainBoss: boolean = false;
+  isMainBoss = false;
 
-  constructor({
-    isPlayer,
-    id,
-    name,
-    skin,
-		avatar,
-    level,
-    nativeHp,
-    strength,
-    agility,
-    x,
-    y,
-    items,
-    isMainBoss,
-  }: CharacterCreateInput) {
+  constructor({ isPlayer, id, name, skin, avatar, level, nativeHp, strength, agility, x, y, items, isMainBoss }: CharacterCreateInput) {
     this.isPlayer = isPlayer || false;
     this.id = id;
     this.name = name;
     this.skin = skin;
-		this.level = level;
+    this.level = level;
     this.avatar = avatar || '';
     this.nativeHp = nativeHp;
     this.strength = strength;

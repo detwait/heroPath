@@ -1,10 +1,10 @@
 import './CharacterAttributesView.css';
-import 'react-tippy/dist/tippy.css'
+import 'react-tippy/dist/tippy.css';
 import { imageService, ImageType } from '../../_Shared/image';
 import { characterService } from '../Character.service';
 import { CharacterAttributesViewProps } from './CharacterAttributesView.props';
 
-export function CharacterAttributesView({ character }: CharacterAttributesViewProps) {
+export function CharacterAttributesView({ character }: CharacterAttributesViewProps): JSX.Element {
   return (
     <div className="CharacterAttributesInfo">
       <p>
@@ -14,7 +14,9 @@ export function CharacterAttributesView({ character }: CharacterAttributesViewPr
       <p>Level: {character.level}</p>
       <p>Strength: {characterService.getStrength(character)}</p>
       <p>Agility: {characterService.getAgility(character)}</p>
-      <p>Health: {character.hp} / {character.maxHp}</p>
+      <p>
+        Health: {character.hp} / {character.maxHp}
+      </p>
     </div>
   );
-};
+}

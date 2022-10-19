@@ -4,26 +4,24 @@ import { Config } from '../../Config';
 import { imageService, ImageType } from '../../_Shared/image';
 import { GameStatus } from '../GameStatus.enum';
 
-export function GameMessageView({ gameStatus, startGame }: GameMessageViewProps) {
+export function GameMessageView({ gameStatus, startGame }: GameMessageViewProps): JSX.Element {
   return (
-    <div className='Message'>
-      <h3 dangerouslySetInnerHTML={{__html: Config.gameMessage[gameStatus] }}>
-      </h3>
+    <div className="Message">
+      <h3 dangerouslySetInnerHTML={{ __html: Config.gameMessage[gameStatus] }}></h3>
       {(() => {
         if (gameStatus === GameStatus.preview) {
           return (
             <p>
-              <img 
-                className='StartGame'
-                src={`${imageService.getPath(ImageType.action, 'start.png')}`} 
-                alt="start" 
+              <img
+                className="StartGame"
+                src={`${imageService.getPath(ImageType.action, 'start.png')}`}
+                alt="start"
                 onClick={() => startGame()}
               />
             </p>
-          )
+          );
         }
       })()}
-
     </div>
   );
-};
+}

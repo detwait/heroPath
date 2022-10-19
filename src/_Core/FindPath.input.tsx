@@ -1,5 +1,5 @@
-import { Point } from "./Point";
-import { TravelSquare } from "./TravelSquare";
+import { Point } from './Point';
+import { TravelSquare } from './TravelSquare';
 
 export interface FindPathInput {
   commonGrid: Point[];

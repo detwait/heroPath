@@ -1,71 +1,71 @@
 import { Config } from '../Config';
 import { Item } from '../Item';
 import { Character } from './Character';
-import { CharacterCreateInput } from "./CharacterCreateInput.interface";
+import { CharacterCreateInput } from './CharacterCreateInput.interface';
 
 class CharacterService {
-	calculateMaxHp(character: Character): number {
-		return character.nativeHp + character.level * 10;
-	}
-	
-	getStrength(character: Character): number {
-		return character.strength + character.items.reduce((acc, item: Item) => acc + item.strength, 0);
-	}
+  calculateMaxHp(character: Character): number {
+    return character.nativeHp + character.level * 10;
+  }
 
-	getAgility(character: Character): number {
-		return character.agility + character.items.reduce((acc, item: Item) => acc + item.agility, 0);
-	}
+  getStrength(character: Character): number {
+    return character.strength + character.items.reduce((acc, item: Item) => acc + item.strength, 0);
+  }
 
-	getLevel(character: Character): number {
-		return character.level;
-	}
+  getAgility(character: Character): number {
+    return character.agility + character.items.reduce((acc, item: Item) => acc + item.agility, 0);
+  }
 
-	create(input: CharacterCreateInput): Character {
-		const character: Character = new Character(input);
-		character.maxHp = this.calculateMaxHp(character);
-		character.hp = character.maxHp;
-		return character;
-	}
+  getLevel(character: Character): number {
+    return character.level;
+  }
 
-	levelUp(character: Character): void {
-		character.level += 1;
-		character.maxHp = this.calculateMaxHp(character);
-		character.hp = character.maxHp;
-	}
+  create(input: CharacterCreateInput): Character {
+    const character: Character = new Character(input);
+    character.maxHp = this.calculateMaxHp(character);
+    character.hp = character.maxHp;
+    return character;
+  }
 
-	addExp(character: Character, exp: number): void {
-		character.exp += exp;
+  levelUp(character: Character): void {
+    character.level += 1;
+    character.maxHp = this.calculateMaxHp(character);
+    character.hp = character.maxHp;
+  }
 
-		if (Config.levelExpMap[character.level + 1] && Config.levelExpMap[character.level + 1] <= character.exp) {
-			this.levelUp(character);
-		}
-	}
+  addExp(character: Character, exp: number): void {
+    character.exp += exp;
 
-	calculateExpFrom(character: Character): number {
-		return character.level * 500;
-	}
+    if (Config.levelExpMap[character.level + 1] && Config.levelExpMap[character.level + 1] <= character.exp) {
+      this.levelUp(character);
+    }
+  }
 
-	decreaseHp(character: Character, hpDown: number): void {
-		character.hp = hpDown > character.hp ? 0 : character.hp - hpDown;
-	}
+  calculateExpFrom(character: Character): number {
+    return character.level * 500;
+  }
 
-	increaseHp(character: Character, hpUp: number): void {
-		character.hp = character.hp + hpUp > character.maxHp ? character.maxHp : character.hp + hpUp;
-	}
+  decreaseHp(character: Character, hpDown: number): void {
+    character.hp = hpDown > character.hp ? 0 : character.hp - hpDown;
+  }
 
-	restoreHp(character: Character): void {
-		character.hp = character.maxHp;
-	}
+  increaseHp(character: Character, hpUp: number): void {
+    character.hp = character.hp + hpUp > character.maxHp ? character.maxHp : character.hp + hpUp;
+  }
 
-	isDead(character: Character): boolean {
-		return character.hp <= 0;
-	}
+  restoreHp(character: Character): void {
+    character.hp = character.maxHp;
+  }
 
-	claimItem(character: Character, item: Item, items: Item[]): Item {
+  isDead(character: Character): boolean {
+    return character.hp <= 0;
+  }
+
+  claimItem(character: Character, item: Item, items: Item[]): Item {
     character.items.push(item);
 
     const index: number = items.indexOf(item);
-    if(index !== -1) {
+    if (index !== -1) {
       items.splice(index, 1);
     }
 

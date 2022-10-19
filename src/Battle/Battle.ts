@@ -1,7 +1,7 @@
-import { Character } from "../Character";
+import { Character } from '../Character';
 
 export class Battle {
-  isActive: boolean = false;
+  isActive = false;
   player!: Character;
   opponent!: Character;
   log!: string[];

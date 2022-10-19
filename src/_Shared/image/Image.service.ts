@@ -1,4 +1,4 @@
-import { ImageType } from "./ImageType.enum";
+import { ImageType } from './ImageType.enum';
 
 class ImageService {
   getPath(imageType: ImageType, value: string) {

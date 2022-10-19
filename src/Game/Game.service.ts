@@ -1,17 +1,17 @@
-import { Config } from "../Config";
-import { Point } from "../_Core/Point";
-import { TravelState } from "./TravelState.enum";
-import { TravelSquare } from "../_Core/TravelSquare";
-import { isPointSame } from "../_Core/Geometry.utils";
-import { Obstacle } from "../Obstacle/Obstacle";
-import { CharacterCreateInput } from "../Character/CharacterCreateInput.interface";
-import { obstacleService } from "../Obstacle";
-import { Item, ItemCreateInput, itemService } from "../Item";
-import { Character, characterService } from "../Character";
-import { PathFinder, pathFinderGeneratorService } from "../_Shared/algorithms";
-import { ObstacleCreateInput } from "../Obstacle/ObstacleCreate.input";
-import { audioService } from "../_Shared/audio";
-import { Battle, battleService } from "../Battle";
+import { Config } from '../Config';
+import { Point } from '../_Core/Point';
+import { TravelState } from './TravelState.enum';
+import { TravelSquare } from '../_Core/TravelSquare';
+import { isPointSame } from '../_Core/Geometry.utils';
+import { Obstacle } from '../Obstacle/Obstacle';
+import { CharacterCreateInput } from '../Character/CharacterCreateInput.interface';
+import { obstacleService } from '../Obstacle';
+import { Item, ItemCreateInput, itemService } from '../Item';
+import { Character, characterService } from '../Character';
+import { PathFinder, pathFinderGeneratorService } from '../_Shared/algorithms';
+import { ObstacleCreateInput } from '../Obstacle/ObstacleCreate.input';
+import { audioService } from '../_Shared/audio';
+import { Battle, battleService } from '../Battle';
 
 const pathFinderService: PathFinder = pathFinderGeneratorService.getPathFinderService(Config.pathFinderAlgorithm);
 
@@ -35,11 +35,11 @@ class GameService {
   }
 
   generateSquares(xAmount: number, yAmount: number): Point[] {
-    let squares: Point[] = [];
+    const squares: Point[] = [];
 
     for (let y = 1; y <= yAmount; y++) {
       for (let x = 1; x <= xAmount; x++) {
-        squares.push({ x,  y });
+        squares.push({ x, y });
       }
     }
 
@@ -47,11 +47,11 @@ class GameService {
   }
 
   addCharacters(characters: CharacterCreateInput[]): Character[] {
-    return characters.map((input: CharacterCreateInput) => characterService.create(input))
+    return characters.map((input: CharacterCreateInput) => characterService.create(input));
   }
 
   addItems(items: ItemCreateInput[]): Item[] {
-    return items.map((input: ItemCreateInput) => itemService.create(input))
+    return items.map((input: ItemCreateInput) => itemService.create(input));
   }
 
   getPlayer(characters: Character[]): Character {
@@ -89,10 +89,12 @@ class GameService {
 
       const newObstacle: Obstacle = obstacleService.create(newObstacleInput);
 
-      if (characters.every((character: Character) => !isPointSame(character, newObstacle)) 
-        && items.every((item: Item) => !isPointSame(item, newObstacle))
-        && obstacles.every((obstacle: Obstacle) => !isPointSame(obstacle, newObstacle))) {
-          obstacles.push(newObstacle);
+      if (
+        characters.every((character: Character) => !isPointSame(character, newObstacle)) &&
+        items.every((item: Item) => !isPointSame(item, newObstacle)) &&
+        obstacles.every((obstacle: Obstacle) => !isPointSame(obstacle, newObstacle))
+      ) {
+        obstacles.push(newObstacle);
       }
     }
 
@@ -100,16 +102,16 @@ class GameService {
   }
 
   isObstacle(point: Point, obstacles: Obstacle[]): boolean {
-    return obstacles.some(i => isPointSame(i, point));
+    return obstacles.some((i) => isPointSame(i, point));
   }
 
   startTravel(character: Character, destination: Point, squares: Point[], obstacles: Obstacle[]): void {
     if (destination.x && destination.y && !isPointSame(character, destination) && character.state === TravelState.stay) {
       const travelPath: TravelSquare[] = pathFinderService.findPath({ start: character, end: destination, commonGrid: squares, obstacles });
-      
+
       if (travelPath && travelPath.length > 0) {
         const travelStartTime: number = new Date().getTime();
-        const travelFinishTime: number  = travelStartTime + travelPath.length * Config.milisecondsForSquareSpeed;
+        const travelFinishTime: number = travelStartTime + travelPath.length * Config.milisecondsForSquareSpeed;
 
         Object.assign(character, {
           travelPath,
@@ -136,11 +138,10 @@ class GameService {
   }
 
   isPlayerOnEnemy(player: Character, characters: Character[]): Character | undefined {
-    return characters
-    .find((character: Character) => player.x === character.x 
-      && player.y === character.y
-      && !characterService.isDead(character)
-      && player.id !== character.id );
+    return characters.find(
+      (character: Character) =>
+        player.x === character.x && player.y === character.y && !characterService.isDead(character) && player.id !== character.id,
+    );
   }
 
   isPlayerOnItem(characterLocation: Point, items: Item[]): Item | undefined {
@@ -156,7 +157,8 @@ class GameService {
         newCharacterPoint = character.travelPath[character.travelPath.length - 1];
       } else {
         const currectTravelSquareIndex = Math.floor(
-          (character.travelPath.length - 1) * (currentTime - character.travelStartTime) / (character.travelFinishTime - character.travelStartTime)
+          ((character.travelPath.length - 1) * (currentTime - character.travelStartTime)) /
+            (character.travelFinishTime - character.travelStartTime),
         );
 
         newCharacterPoint = character.travelPath[currectTravelSquareIndex];
@@ -167,15 +169,15 @@ class GameService {
       if (!x || !y) {
         return false;
       }
-      
-      Object.assign(character, { x, y })
+
+      Object.assign(character, { x, y });
       const itemFound: Item | undefined = this.isPlayerOnItem({ x, y }, items);
       const enemyFound: Character | undefined = this.isPlayerOnEnemy(character, characters);
-  
+
       if (itemFound) {
         characterService.claimItem(character, itemFound, items);
       }
-  
+
       if (enemyFound) {
         battleService.start(battle, character, enemyFound);
 
@@ -183,7 +185,7 @@ class GameService {
           audioService.change(audio, Config.audios.finalBattle);
         }
       }
-  
+
       if (isPointSame(character.destination, { x, y })) {
         if (character.state === TravelState.travel) {
           this.finishTravel(character);
@@ -195,6 +197,6 @@ class GameService {
 
     return false;
   }
-} 
+}
 
 export const gameService = new GameService();

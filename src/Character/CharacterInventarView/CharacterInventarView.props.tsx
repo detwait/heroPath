@@ -1,6 +1,6 @@
-import { Character } from "../Character";
+import { Character } from '../Character';
 
 export type CharacterInventarViewProps = {
   character: Character;
   children?: React.ReactNode;
-}
+};

@@ -11,7 +11,7 @@ class AudioService {
   }
 
   change(audio: HTMLAudioElement, value: string): void {
-    audio.setAttribute('src', `${process.env.PUBLIC_URL}/audios/${value}`)
+    audio.setAttribute('src', `${process.env.PUBLIC_URL}/audios/${value}`);
   }
 }
 

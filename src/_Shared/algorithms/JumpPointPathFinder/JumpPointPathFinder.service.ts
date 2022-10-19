@@ -1,17 +1,17 @@
-import { TravelSquare } from "../../../_Core/TravelSquare";
-import { FindPathInput } from "../../../_Core/FindPath.input";
-import { Point } from "../../../_Core/Point";
-import { expandPath, heuristic, manhattan, pathFromParents } from "../../../_Core/Geometry.utils";
-import { JumpPointNode } from "./JumpPointNode";
-import { JumpPointNodeStatus } from "./JumpPointNodeStatus.enum";
-import { PathFinder } from "../PathFinder.interface";
+import { TravelSquare } from '../../../_Core/TravelSquare';
+import { FindPathInput } from '../../../_Core/FindPath.input';
+import { Point } from '../../../_Core/Point';
+import { expandPath, heuristic, manhattan, pathFromParents } from '../../../_Core/Geometry.utils';
+import { JumpPointNode } from './JumpPointNode';
+import { JumpPointNodeStatus } from './JumpPointNodeStatus.enum';
+import { PathFinder } from '../PathFinder.interface';
 
 class JumpPointPathFinderService implements PathFinder {
   grid: JumpPointNode[] = [];
   obstacles: Point[] = [];
   startNode: JumpPointNode | undefined;
   endNode: JumpPointNode | undefined;
-  
+
   isNodeWalkable(point: Point | undefined): boolean {
     if (!point) {
       return false;
@@ -23,7 +23,7 @@ class JumpPointPathFinderService implements PathFinder {
   findPath({ commonGrid, start, end, obstacles }: FindPathInput): TravelSquare[] {
     this.obstacles = obstacles;
 
-    this.grid = commonGrid.map(i => ({
+    this.grid = commonGrid.map((i) => ({
       ...i,
       parent: null,
       g: null,
@@ -35,7 +35,6 @@ class JumpPointPathFinderService implements PathFinder {
     this.startNode = this.getNode(start.x, start.y);
     this.endNode = this.getNode(end.x, end.y);
 
-
     if (!this.isNodeWalkable(end) || !this.startNode || !this.endNode) {
       return [];
     }
@@ -46,7 +45,7 @@ class JumpPointPathFinderService implements PathFinder {
     this.startNode.status = JumpPointNodeStatus.open;
 
     while (this.getOpenedList().length > 0) {
-      let currentNode: JumpPointNode = this.findBestOpenedNode();
+      const currentNode: JumpPointNode = this.findBestOpenedNode();
       currentNode.status = JumpPointNodeStatus.closed;
 
       if (currentNode.x === end.x && currentNode.y === end.y) {
@@ -60,15 +59,15 @@ class JumpPointPathFinderService implements PathFinder {
   }
 
   openNewNodes(currentNode: JumpPointNode): void {
-    if(!this.endNode) {
+    if (!this.endNode) {
       return;
     }
 
     const { x, y } = currentNode;
     const neighbours: JumpPointNode[] = this.findNeighbours(currentNode);
 
-    for (let neighbour of neighbours) {
-      const jumpPoint: JumpPointNode | null = this.jump(neighbour, x ,y);
+    for (const neighbour of neighbours) {
+      const jumpPoint: JumpPointNode | null = this.jump(neighbour, x, y);
 
       if (jumpPoint) {
         if (jumpPoint.status === JumpPointNodeStatus.closed) {
@@ -76,7 +75,7 @@ class JumpPointPathFinderService implements PathFinder {
         }
 
         const d: number = manhattan(currentNode, jumpPoint);
-        const ng: number = currentNode.g || 0 + d; 
+        const ng: number = currentNode.g || 0 + d;
 
         if (!jumpPoint.g || ng < (jumpPoint.g || 0)) {
           jumpPoint.g = ng;
@@ -93,15 +92,15 @@ class JumpPointPathFinderService implements PathFinder {
   }
 
   getNode(x: number, y: number): JumpPointNode | undefined {
-    return this.grid.find(i => i.x === x && i.y === y);
+    return this.grid.find((i) => i.x === x && i.y === y);
   }
 
   getOpenedList() {
-    return this.grid.filter(i => i.status === JumpPointNodeStatus.open);
+    return this.grid.filter((i) => i.status === JumpPointNodeStatus.open);
   }
 
   findBestOpenedNode(): JumpPointNode {
-    return this.getOpenedList().reduce((acc, i) => acc.f && (!i.f || acc.f < i.f) ? acc : i);
+    return this.getOpenedList().reduce((acc, i) => (acc.f && (!i.f || acc.f < i.f) ? acc : i));
   }
 
   addToIfExistAndWalkable(list: JumpPointNode[], x: number, y: number) {
@@ -123,18 +122,25 @@ class JumpPointPathFinderService implements PathFinder {
       const dy: number = (y - py) / Math.max(Math.abs(y - py), 1);
 
       if (dx !== 0) {
-        for (let [i, j] of [ [x, y - 1], [x, y + 1], [x + dx, y] ]) {
+        for (const [i, j] of [
+          [x, y - 1],
+          [x, y + 1],
+          [x + dx, y],
+        ]) {
           this.addToIfExistAndWalkable(neighbors, i, j);
         }
       } else if (dy !== 0) {
-        for (let [i, j] of [ [x - 1, y], [x + 1, y], [x, y + dy] ]) {
+        for (const [i, j] of [
+          [x - 1, y],
+          [x + 1, y],
+          [x, y + dy],
+        ]) {
           this.addToIfExistAndWalkable(neighbors, i, j);
         }
       }
 
       return neighbors;
-    }
-    else {
+    } else {
       return this.getGridNeighbors(node);
     }
   }
@@ -144,18 +150,18 @@ class JumpPointPathFinderService implements PathFinder {
     const eastNode: JumpPointNode | undefined = this.getNode(x + 1, y);
     const northNode: JumpPointNode | undefined = this.getNode(x, y - 1);
     const southNode: JumpPointNode | undefined = this.getNode(x, y + 1);
-    return [westNode, eastNode, northNode, southNode].filter(i => !!i) as JumpPointNode[] || [];
+    return ([westNode, eastNode, northNode, southNode].filter((i) => !!i) as JumpPointNode[]) || [];
   }
 
   getClosedList() {
-    return this.grid.filter(i => i.status = JumpPointNodeStatus.closed);
+    return this.grid.filter((i) => (i.status = JumpPointNodeStatus.closed));
   }
 
   jump(point: JumpPointNode | undefined, px: number, py: number): JumpPointNode | null {
     if (!point) {
       return null;
     }
-    
+
     const { x, y } = point;
     const dx: number = x - px;
     const dy: number = y - py;
@@ -170,16 +176,16 @@ class JumpPointPathFinderService implements PathFinder {
 
     if (dx !== 0) {
       if (
-          (this.isNodeWalkable(this.getNode(x, y - 1)) && !this.isNodeWalkable(this.getNode(x - dx, y - 1))) ||
-          (this.isNodeWalkable(this.getNode(x, y + 1)) && !this.isNodeWalkable(this.getNode(x - dx, y + 1)))
-         ) {
+        (this.isNodeWalkable(this.getNode(x, y - 1)) && !this.isNodeWalkable(this.getNode(x - dx, y - 1))) ||
+        (this.isNodeWalkable(this.getNode(x, y + 1)) && !this.isNodeWalkable(this.getNode(x - dx, y + 1)))
+      ) {
         return this.getNode(x, y) || null;
       }
     } else if (dy !== 0) {
       if (
-          (this.isNodeWalkable(this.getNode(x - 1, y)) && !this.isNodeWalkable(this.getNode(x - 1, y - dy))) ||
-          (this.isNodeWalkable(this.getNode(x + 1, y)) && !this.isNodeWalkable(this.getNode(x + 1, y - dy)))
-         ) {
+        (this.isNodeWalkable(this.getNode(x - 1, y)) && !this.isNodeWalkable(this.getNode(x - 1, y - dy))) ||
+        (this.isNodeWalkable(this.getNode(x + 1, y)) && !this.isNodeWalkable(this.getNode(x + 1, y - dy)))
+      ) {
         return this.getNode(x, y) || null;
       }
 
@@ -187,7 +193,7 @@ class JumpPointPathFinderService implements PathFinder {
         return this.getNode(x, y) || null;
       }
     } else {
-      throw new Error("Only horizontal and vertical movements are allowed");
+      throw new Error('Only horizontal and vertical movements are allowed');
     }
 
     return this.jump(this.getNode(x + dx, y + dy), x, y);

@@ -1,4 +1,4 @@
-import { AstarNodeStatus } from "./AstarNodeStatus.enum";
+import { AstarNodeStatus } from './AstarNodeStatus.enum';
 
 export interface AstarNode {
   parent: null | AstarNode;

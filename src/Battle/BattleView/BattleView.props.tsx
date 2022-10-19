@@ -1,8 +1,8 @@
-import { Battle } from "../Battle";
+import { Battle } from '../Battle';
 
 export type BattleViewProps = {
   battle: Battle;
-  proccessBattle: (args: any) => void;
+  proccessBattle: (args: unknown) => void;
   closeBattle: () => void;
   children?: React.ReactNode;
-}
+};

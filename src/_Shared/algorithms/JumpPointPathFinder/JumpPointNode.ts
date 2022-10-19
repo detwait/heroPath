@@ -1,4 +1,4 @@
-import { JumpPointNodeStatus } from "./JumpPointNodeStatus.enum";
+import { JumpPointNodeStatus } from './JumpPointNodeStatus.enum';
 
 export interface JumpPointNode {
   parent: null | JumpPointNode;

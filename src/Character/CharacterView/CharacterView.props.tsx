@@ -1,7 +1,7 @@
-import { Character } from "../Character";
+import { Character } from '../Character';
 
 export type CharacterViewProps = {
   entity: Character;
-  onClick: (args: any) => void;
+  onClick: (args: unknown) => void;
   children?: React.ReactNode;
-}
+};

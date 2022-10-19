@@ -1,17 +1,17 @@
-import { CharacterCreateInput } from "./Character/CharacterCreateInput.interface";
+import { CharacterCreateInput } from './Character/CharacterCreateInput.interface';
 
-import { Config } from "./Config";
-import { ItemCreateInput } from "./Item";
+import { Config } from './Config';
+import { ItemCreateInput } from './Item';
 
 const { skins, avatars } = Config;
 
 type SeedType = {
-  characters: CharacterCreateInput[],
-  items: ItemCreateInput[],
-}
+  characters: CharacterCreateInput[];
+  items: ItemCreateInput[];
+};
 
 const characters: CharacterCreateInput[] = [
-  { 
+  {
     isPlayer: true,
     id: 'ninja',
     name: 'Ninja',
@@ -27,7 +27,7 @@ const characters: CharacterCreateInput[] = [
       {
         itemId: 'ringStrength',
         x: 0,
-        y: 0, 
+        y: 0,
       },
     ],
   },
@@ -78,11 +78,11 @@ const characters: CharacterCreateInput[] = [
 
 export const Seed: SeedType = {
   characters,
-  items: [  
+  items: [
     {
       itemId: 'ringAgility',
       x: 20,
-      y: 20, 
+      y: 20,
     },
   ],
-}
+};

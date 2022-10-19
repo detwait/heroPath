@@ -1,43 +1,43 @@
-import { GameStatus } from "./Game/GameStatus.enum";
-import { ItemInfoInput } from "./Item/ItemInfo.interface";
+import { GameStatus } from './Game/GameStatus.enum';
+import { ItemInfoInput } from './Item/ItemInfo.interface';
 
 type ConfigType = {
-  pathFinderAlgorithm: 'astar' | 'pointjump',
-  boardSideLength: number,
-  boardSideSquaresAmount: number,
-  milisecondsForSquareSpeed: number,
-  appIntervalFrequencyMiliseconds: number,
-  levelExpMap: Record<number, number>,
-  skins: Record<string, string>,
-  avatars: Record<string, string>,
-  items: Record<string, ItemInfoInput>,
-  audios: Record<string, string>,
-  gameMessage: Record<GameStatus, string>,
+  pathFinderAlgorithm: 'astar' | 'pointjump';
+  boardSideLength: number;
+  boardSideSquaresAmount: number;
+  milisecondsForSquareSpeed: number;
+  appIntervalFrequencyMiliseconds: number;
+  levelExpMap: Record<number, number>;
+  skins: Record<string, string>;
+  avatars: Record<string, string>;
+  items: Record<string, ItemInfoInput>;
+  audios: Record<string, string>;
+  gameMessage: Record<GameStatus, string>;
 };
 
 const skins: Record<string, string> = {
-  ninja: "ninja.png",
-  rock: "rock.png",
-  bush: "bush.png",
-  troll: "troll.png",
-  golem: "golem.png",
-  dragon: "dragon.png",
-  ringStrength: "ring_strength.png",
-  ringAgility: "ring_agility.png",
+  ninja: 'ninja.png',
+  rock: 'rock.png',
+  bush: 'bush.png',
+  troll: 'troll.png',
+  golem: 'golem.png',
+  dragon: 'dragon.png',
+  ringStrength: 'ring_strength.png',
+  ringAgility: 'ring_agility.png',
 };
 
 const avatars: Record<string, string> = {
-  ninja: "ninja.png",
-  troll: "troll.png",
-  golem: "golem.png",
-  dragon: "dragon.png",
-  ringStrength: "ring_strength.png",
-  ringAgility: "ring_agility.png",
+  ninja: 'ninja.png',
+  troll: 'troll.png',
+  golem: 'golem.png',
+  dragon: 'dragon.png',
+  ringStrength: 'ring_strength.png',
+  ringAgility: 'ring_agility.png',
 };
 
 const audios: Record<string, string> = {
-  location: "location.mp3",
-  finalBattle: "finalbattle.mp3",
+  location: 'location.mp3',
+  finalBattle: 'finalbattle.mp3',
 };
 
 export const Config: ConfigType = {
@@ -71,14 +71,14 @@ export const Config: ConfigType = {
 
   levelExpMap: {
     2: 500,
-		3: 1000,
-		4: 2000,
-		5: 5000,
-		6: 10000,
-		7: 15000,
-		8: 20000,
-		9: 25000,
-	},
+    3: 1000,
+    4: 2000,
+    5: 5000,
+    6: 10000,
+    7: 15000,
+    8: 20000,
+    9: 25000,
+  },
 
   gameMessage: {
     [GameStatus.preview]: `The angry dragon is roaming the realm. <br />
@@ -86,13 +86,13 @@ export const Config: ConfigType = {
                            Althouh you are no much for the dragon now. <br />
                            But a direct way may not appear as a smart way...`,
     [GameStatus.running]: ``,
-    [GameStatus.lost]:   `The hero fought valiantly. <br />
+    [GameStatus.lost]: `The hero fought valiantly. <br />
                           The hero fought nobly. <br />
                           The hero fought honorably. <br />
                           And the hero died.`,
-    [GameStatus.won]:    `That's my epic tale. <br />
+    [GameStatus.won]: `That's my epic tale. <br />
                           Our champion prevailed. <br />
                           Defeated the villain. <br />
                           Now pour him some ale.`,
   },
-}
+};

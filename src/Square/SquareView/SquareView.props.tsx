@@ -1,8 +1,8 @@
-import { Point } from "../../_Core/Point";
+import { Point } from '../../_Core/Point';
 
 export type SquareViewProps = {
   entity: Point;
   isObstacle: boolean;
-  onClick: (args: any) => void;
+  onClick: (args: unknown) => void;
   children?: React.ReactNode;
-}
+};
