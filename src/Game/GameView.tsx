@@ -59,7 +59,7 @@ export function GameView() {
   }
 
   function travel() {
-    const isUpdated: boolean = gameService.travel(player, characters, items, battle);
+    const isUpdated: boolean = gameService.travel(player, characters, items, battle, game.audio);
 
     if (isUpdated) {
       setItems([ ...items ]);

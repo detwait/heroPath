@@ -35,6 +35,10 @@ export class GameService {
     return audioService.create(Config.audios.location);
   }
 
+  changeAudio(audio: HTMLAudioElement, track: string): void {
+    audioService.change(audio, track);
+  }
+
   generateSquares(xAmount: number, yAmount: number): Point[] {
     let squares: Point[] = [];
 
@@ -148,7 +152,7 @@ export class GameService {
     return items.find(({ x, y }: Item) => characterLocation.x === x && characterLocation.y === y);
   }
 
-  travel(character: Character, characters: Character[], items: Item[], battle: Battle): boolean {
+  travel(character: Character, characters: Character[], items: Item[], battle: Battle, audio: HTMLAudioElement): boolean {
     let newCharacterPoint: Point = { x: character.x, y: character.y };
 
     if (character.state === TravelState.travel) {
@@ -179,6 +183,10 @@ export class GameService {
   
       if (enemyFound) {
         battleService.start(battle, character, enemyFound);
+
+        if (enemyFound.isMainBoss) {
+          audioService.change(audio, Config.audios.finalBattle);
+        }
       }
   
       if (isPointSame(character.destination, { x, y })) {

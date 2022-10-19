@@ -18,7 +18,7 @@ const characters: CharacterCreateInput[] = [
     skin: skins.ninja,
     avatar: avatars.ninja,
     level: 1,
-    strength: 20,
+    strength: 2,
     agility: 2,
     nativeHp: 20,
     x: 2,

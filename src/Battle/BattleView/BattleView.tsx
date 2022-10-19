@@ -24,15 +24,15 @@ export function BattleView({ battle, proccessBattle, closeBattle }: BattleViewPr
         {(() => {
           if (!battleService.isBattleOver(battle)) {
             return (
-              <button onClick={() => proccessBattle(battle)}>
+              <p className='ProceedRound' onClick={() => proccessBattle(battle)}>
                 <img src={`${imageService.getPath(ImageType.action, 'attack.png')}`} alt="avatar" />
-              </button>
+              </p>
             )
           } else {
             return (
-              <button onClick={() => closeBattle()}>
+              <p className='GoToMap' onClick={() => closeBattle()}>
                 <img src={`${imageService.getPath(ImageType.action, 'map.png')}`} alt="avatar" />
-              </button>
+              </p>
             )
           } 
         })()}
