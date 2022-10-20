@@ -1,6 +1,7 @@
-import { Config } from '../../Config';
-import { imageService, ImageType } from '../../_Shared/image';
 import './ObstacleView.css';
+
+import { imageService, ImageType } from '../../_Shared/image';
+import { Config } from '../../Config';
 import { ObstacleViewProps } from './ObstacleView.props';
 
 export function ObstacleView({ entity }: ObstacleViewProps): JSX.Element {

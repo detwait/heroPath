@@ -1,7 +1,8 @@
 import './PlayerInfoView.css';
-import { PlayerInfoViewProps } from './PlayerInfoView.props';
+
 import { CharacterAttributesView } from '../../Character/CharacterAttributesView/CharacterAttributesView';
 import { CharacterInventarView } from '../../Character/CharacterInventarView/CharacterInventarView';
+import { PlayerInfoViewProps } from './PlayerInfoView.props';
 
 export function PlayerInfoView({ player }: PlayerInfoViewProps): JSX.Element {
   return (

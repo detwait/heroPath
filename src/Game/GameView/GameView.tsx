@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react';
 import './GameView.css';
-import { Config } from '../../Config';
-import { gameService } from '../Game.service';
+
+import { useEffect, useState } from 'react';
+
 import { Point } from '../../_Core/Point';
-import { Seed } from '../../Seed';
-import { Character } from '../../Character';
-import { Item } from '../../Item';
 import { Battle, battleService, BattleView } from '../../Battle';
-import { PlayerInfoView } from '../PlayerInfoView/PlayerInfoView';
-import { GameLocationView } from '../GameLocationView/GameLocationView';
-import { Game } from '../Game';
+import { Character } from '../../Character';
+import { Config } from '../../Config';
+import { Item } from '../../Item';
 import { Obstacle } from '../../Obstacle/Obstacle';
-import { GameStatus } from '../GameStatus.enum';
+import { Seed } from '../../Seed';
+import { Game } from '../Game';
+import { gameService } from '../Game.service';
+import { GameLocationView } from '../GameLocationView/GameLocationView';
 import { GameMessageView } from '../GameMessageView/GameMessageView';
+import { GameStatus } from '../GameStatus.enum';
+import { PlayerInfoView } from '../PlayerInfoView/PlayerInfoView';
 
 const game: Game = new Game({ ...Seed });
 

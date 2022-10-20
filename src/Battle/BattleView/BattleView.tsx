@@ -1,7 +1,8 @@
-import { CharacterAttributesView } from '../../Character/CharacterAttributesView/CharacterAttributesView';
-import { imageService, ImageType } from '../../_Shared/image';
-import { battleService } from '../Battle.service';
 import './BattleView.css';
+
+import { imageService, ImageType } from '../../_Shared/image';
+import { CharacterAttributesView } from '../../Character/CharacterAttributesView/CharacterAttributesView';
+import { battleService } from '../Battle.service';
 import { BattleViewProps } from './BattleView.props';
 
 export function BattleView({ battle, proccessBattle, closeBattle }: BattleViewProps): JSX.Element {

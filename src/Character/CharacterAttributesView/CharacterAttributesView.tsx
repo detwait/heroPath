@@ -1,5 +1,6 @@
 import './CharacterAttributesView.css';
 import 'react-tippy/dist/tippy.css';
+
 import { imageService, ImageType } from '../../_Shared/image';
 import { characterService } from '../Character.service';
 import { CharacterAttributesViewProps } from './CharacterAttributesView.props';

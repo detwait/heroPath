@@ -1,11 +1,12 @@
 import './GameLocationView.css';
-import { ObstacleView } from '../../Obstacle';
+
 import { Character, characterService, CharacterView } from '../../Character';
-import { ItemView } from '../../Item';
 import { Config } from '../../Config';
-import { GameLocationViewProps } from './GameLocationView.props';
+import { ItemView } from '../../Item';
+import { ObstacleView } from '../../Obstacle';
 import { SquareView } from '../../Square';
 import { gameService } from '../Game.service';
+import { GameLocationViewProps } from './GameLocationView.props';
 
 export function GameLocationView({ squares, obstacles, items, characters, startTravel }: GameLocationViewProps): JSX.Element {
   const styles: React.CSSProperties = {

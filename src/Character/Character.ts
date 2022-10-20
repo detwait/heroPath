@@ -2,8 +2,8 @@ import { IdEntity } from '../_Core/IdEntity.interface';
 import { Point } from '../_Core/Point';
 import { TravelSquare } from '../_Core/TravelSquare';
 import { TravelState } from '../Game/TravelState.enum';
-import { CharacterCreateInput } from './CharacterCreateInput.interface';
 import { Item, ItemCreateInput, itemService } from '../Item';
+import { CharacterCreateInput } from './CharacterCreateInput.interface';
 
 export class Character implements IdEntity, Point {
   isPlayer = false;

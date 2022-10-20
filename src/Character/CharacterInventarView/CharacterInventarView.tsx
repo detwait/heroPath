@@ -1,6 +1,8 @@
-import { Tooltip } from 'react-tippy';
 import './CharacterInventarView.css';
 import 'react-tippy/dist/tippy.css';
+
+import { Tooltip } from 'react-tippy';
+
 import { imageService, ImageType } from '../../_Shared/image';
 import { CharacterInventarViewProps } from './CharacterInventarView.props';
 

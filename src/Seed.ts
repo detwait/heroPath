@@ -1,5 +1,4 @@
 import { CharacterCreateInput } from './Character/CharacterCreateInput.interface';
-
 import { Config } from './Config';
 import { ItemCreateInput } from './Item';
 

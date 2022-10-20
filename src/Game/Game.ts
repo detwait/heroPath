@@ -1,11 +1,11 @@
-import { Config } from '../Config';
 import { Point } from '../_Core/Point';
-import { Obstacle } from '../Obstacle/Obstacle';
-import { GameCreateInput } from './GameCreateInput.interface';
-import { Item } from '../Item';
-import { Character } from '../Character';
-import { gameService } from './Game.service';
 import { Battle } from '../Battle';
+import { Character } from '../Character';
+import { Config } from '../Config';
+import { Item } from '../Item';
+import { Obstacle } from '../Obstacle/Obstacle';
+import { gameService } from './Game.service';
+import { GameCreateInput } from './GameCreateInput.interface';
 import { GameStatus } from './GameStatus.enum';
 
 export class Game {

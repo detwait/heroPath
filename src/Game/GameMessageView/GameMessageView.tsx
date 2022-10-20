@@ -1,8 +1,9 @@
 import './GameMessageView.css';
-import { GameMessageViewProps } from './GameMessageView.props';
-import { Config } from '../../Config';
+
 import { imageService, ImageType } from '../../_Shared/image';
+import { Config } from '../../Config';
 import { GameStatus } from '../GameStatus.enum';
+import { GameMessageViewProps } from './GameMessageView.props';
 
 export function GameMessageView({ gameStatus, startGame }: GameMessageViewProps): JSX.Element {
   return (

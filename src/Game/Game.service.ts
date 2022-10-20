@@ -1,17 +1,17 @@
-import { Config } from '../Config';
-import { Point } from '../_Core/Point';
-import { TravelState } from './TravelState.enum';
-import { TravelSquare } from '../_Core/TravelSquare';
 import { isPointSame } from '../_Core/Geometry.utils';
-import { Obstacle } from '../Obstacle/Obstacle';
-import { CharacterCreateInput } from '../Character/CharacterCreateInput.interface';
-import { obstacleService } from '../Obstacle';
-import { Item, ItemCreateInput, itemService } from '../Item';
-import { Character, characterService } from '../Character';
+import { Point } from '../_Core/Point';
+import { TravelSquare } from '../_Core/TravelSquare';
 import { PathFinder, pathFinderGeneratorService } from '../_Shared/algorithms';
-import { ObstacleCreateInput } from '../Obstacle/ObstacleCreate.input';
 import { audioService } from '../_Shared/audio';
 import { Battle, battleService } from '../Battle';
+import { Character, characterService } from '../Character';
+import { CharacterCreateInput } from '../Character/CharacterCreateInput.interface';
+import { Config } from '../Config';
+import { Item, ItemCreateInput, itemService } from '../Item';
+import { obstacleService } from '../Obstacle';
+import { Obstacle } from '../Obstacle/Obstacle';
+import { ObstacleCreateInput } from '../Obstacle/ObstacleCreate.input';
+import { TravelState } from './TravelState.enum';
 
 const pathFinderService: PathFinder = pathFinderGeneratorService.getPathFinderService(Config.pathFinderAlgorithm);
 

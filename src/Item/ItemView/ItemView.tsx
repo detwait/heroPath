@@ -1,6 +1,7 @@
-import { Config } from '../../Config';
-import { imageService, ImageType } from '../../_Shared/image';
 import './ItemView.css';
+
+import { imageService, ImageType } from '../../_Shared/image';
+import { Config } from '../../Config';
 import { ItemViewProps } from './ItemView.props';
 
 export function ItemView({ entity, onClick }: ItemViewProps): JSX.Element {

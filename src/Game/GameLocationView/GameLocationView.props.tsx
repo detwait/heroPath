@@ -1,7 +1,7 @@
+import { Point } from '../../_Core/Point';
 import { Character } from '../../Character';
 import { Item } from '../../Item';
 import { Obstacle } from '../../Obstacle/Obstacle';
-import { Point } from '../../_Core/Point';
 
 export type GameLocationViewProps = {
   characters: Character[];
