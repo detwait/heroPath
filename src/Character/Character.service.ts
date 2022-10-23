@@ -9,11 +9,11 @@ class CharacterService {
   }
 
   getStrength(character: Character): number {
-    return character.strength + character.items.reduce((acc, item: Item) => acc + item.strength, 0);
+    return character.strength + (this.getLevel(character) - 1) + character.items.reduce((acc, item: Item) => acc + item.strength, 0);
   }
 
   getAgility(character: Character): number {
-    return character.agility + character.items.reduce((acc, item: Item) => acc + item.agility, 0);
+    return character.agility + (this.getLevel(character) - 1) + character.items.reduce((acc, item: Item) => acc + item.agility, 0);
   }
 
   getLevel(character: Character): number {
