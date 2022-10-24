@@ -1,5 +1,4 @@
-import { Battle } from '../Battle';
-import battleService from '../Battle/Battle.service';
+import { Battle, battleService } from '../Battle';
 import { Character, characterService } from '../Character';
 import { CharacterCreateInput } from '../Character/CharacterCreateInput.interface';
 import { Config } from '../Config';

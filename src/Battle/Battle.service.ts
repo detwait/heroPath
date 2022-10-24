@@ -92,4 +92,4 @@ class BattleService {
   }
 }
 
-export default new BattleService();
+export const battleService = new BattleService();
