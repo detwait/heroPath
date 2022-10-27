@@ -21,7 +21,7 @@ class GameService {
     return characterService.isDead(mainBoss);
   }
 
-  isGamLost(characters: Character[]): boolean {
+  isGameLost(characters: Character[]): boolean {
     const player: Character = this.getPlayer(characters);
     return characterService.isDead(player);
   }

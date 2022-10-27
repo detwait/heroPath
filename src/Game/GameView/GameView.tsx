@@ -52,7 +52,7 @@ export function GameView(): JSX.Element {
 
     if (gameService.isGameWon(characters)) {
       setGameStatus(GameStatus.won);
-    } else if (gameService.isGamLost(characters)) {
+    } else if (gameService.isGameLost(characters)) {
       setGameStatus(GameStatus.lost);
     }
   }

@@ -55,6 +55,11 @@ class BattleService {
         battleLogService.death(battle.log, defender);
         battleLogService.win(battle.log, attacker);
 
+        for (const item of defender.items) {
+          characterService.claimItem(attacker, item, []);
+          battleLogService.claimItem(battle.log, attacker, item);
+        }
+
         const attackerOldLevel: number = characterService.getLevel(attacker);
         const battleExp: number = characterService.calculateExpFrom(defender);
         characterService.addExp(attacker, battleExp);

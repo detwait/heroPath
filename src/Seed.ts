@@ -32,17 +32,43 @@ const characters: CharacterCreateInput[] = [
   },
   {
     isPlayer: false,
-    id: 'troll',
-    name: 'Troll',
-    skin: skins.troll,
-    avatar: avatars.troll,
+    id: 'skelet',
+    name: 'Skelet',
+    skin: skins.skelet,
+    avatar: avatars.skelet,
     level: 1,
     strength: 1,
     agility: 2,
     nativeHp: 10,
     x: 10,
     y: 10,
-    items: [],
+    items: [
+      {
+        itemId: 'boots',
+        x: 0,
+        y: 0,
+      },
+    ],
+  },
+  {
+    isPlayer: false,
+    id: 'troll',
+    name: 'Troll',
+    skin: skins.troll,
+    avatar: avatars.troll,
+    level: 2,
+    strength: 1,
+    agility: 2,
+    nativeHp: 10,
+    x: 15,
+    y: 18,
+    items: [
+      {
+        itemId: 'gloves',
+        x: 0,
+        y: 0,
+      },
+    ],
   },
   {
     isPlayer: false,
@@ -56,7 +82,13 @@ const characters: CharacterCreateInput[] = [
     nativeHp: 20,
     x: 25,
     y: 5,
-    items: [],
+    items: [
+      {
+        itemId: 'helm',
+        x: 0,
+        y: 0,
+      },
+    ],
   },
   {
     isPlayer: false,

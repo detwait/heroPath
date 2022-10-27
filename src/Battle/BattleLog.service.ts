@@ -1,4 +1,5 @@
 import { Character } from '../Character';
+import { Item } from '../Item';
 
 class BattleLogService {
   hit(log: string[], character1: Character, character2: Character, damage: number) {
@@ -23,6 +24,10 @@ class BattleLogService {
 
   getLevel(log: string[], character: Character, level: number) {
     log.push(`${character.name} achives ${level} level!`);
+  }
+
+  claimItem(log: string[], character: Character, item: Item) {
+    log.push(`${character.name} gets ${item.name}!`);
   }
 }
 
