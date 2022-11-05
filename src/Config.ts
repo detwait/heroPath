@@ -59,7 +59,7 @@ export const Config: ConfigType = {
   items: {
     ringStrength: {
       name: 'Ring of Strength',
-      description: 'It fills with power. <br> Strength +1',
+      description: 'It fills with power.',
       skin: skins.chest,
       avatar: avatars.ringStrength,
       strength: 1,
@@ -67,7 +67,7 @@ export const Config: ConfigType = {
     },
     ringAgility: {
       name: 'Ring of Agility',
-      description: 'I feel quicker with this ring. <br> Agility +1',
+      description: 'I feel quicker with this ring.',
       skin: skins.chest,
       avatar: avatars.ringAgility,
       strength: 0,
@@ -75,7 +75,7 @@ export const Config: ConfigType = {
     },
     gloves: {
       name: 'Gloves',
-      description: 'These gloves help hit harder. <br> Strength +2',
+      description: 'These gloves help hit harder.',
       skin: skins.chest,
       avatar: avatars.gloves,
       strength: 2,
@@ -83,15 +83,15 @@ export const Config: ConfigType = {
     },
     boots: {
       name: 'Boots',
-      description: 'These boots help move faster. <br> Strength +2',
+      description: 'These boots help move faster.',
       skin: skins.chest,
       avatar: avatars.boots,
-      strength: 2,
-      agility: 0,
+      strength: 0,
+      agility: 2,
     },
     helm: {
       name: 'Helm',
-      description: 'Old magic helm. <br> Strength +2, Agility +2',
+      description: 'Old magic helm.',
       skin: skins.chest,
       avatar: avatars.helm,
       strength: 2,
